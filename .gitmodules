@@ -1,0 +1,3 @@
+[submodule "judge"]
+	path = judge
+	url = git@github.com:jackyyf/ds-judge.git
