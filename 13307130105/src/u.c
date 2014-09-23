@@ -1,1 +1,0 @@
-main(){puts("Hello World");}
