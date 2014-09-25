@@ -6,6 +6,6 @@
 using namespace std;
 int main()
 {
-    printf("I am not accustomed to github. Hello world!\n");
+    printf("Hello world\n");
     return 0;
 }
