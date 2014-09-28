@@ -11,7 +11,6 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
-#include <cstring>
 
 #include "ArrayList.cpp"
 
