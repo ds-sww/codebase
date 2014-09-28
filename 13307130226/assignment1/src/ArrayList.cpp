@@ -65,6 +65,7 @@ public:
 			list[i-1] = list[i];
 		--self_size;
 		checkSize();
+		return re;
 	}
 };
 /*
