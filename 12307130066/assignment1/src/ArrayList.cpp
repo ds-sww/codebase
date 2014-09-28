@@ -1,10 +1,9 @@
 
 /**
- * @author1 whimsycwd
- * @author2 XuanYuan
- * @date   2014.9.26
- * 类似Vector
+ * @author XuanYuan
+ * @date   2014.9.28
  */
+
 #include <iostream>
 #include <cassert>
 #include "List.h"
@@ -38,6 +37,7 @@ private :
         delete [] array;
         array = newArray;
     }
+    
     void shrinkCapacity() {
         // funny thing happen without this line
         if (capacity <= initialCapacity) {
@@ -82,8 +82,7 @@ private :
                 itModCnt = outer->modCnt;
                 this->outer = outer;
             }
-                
-            //done
+        
             bool hasNext() {
                 modifiedCheck();
                 if (itCnt >= outer->cnt) {
@@ -92,7 +91,6 @@ private :
                 return 1;
             }
 
-            //done
             E next() {
                 modifiedCheck();
                 return outer->array[itCnt++];
@@ -121,40 +119,32 @@ public :
         cnt = 0;
             
     }
-        
-    //done
+    
     int size() const {
         return cnt;
     }
-    //done
+    
     bool isEmpty() const {
         if (cnt == 0) {
             return 1;
         }
         return 0;
     }
-    //done
+    
     T get(int index) const {
-        //这里其实应该加入index检测
+        rangeCheck(index);
         return array[index];
     }
-    //done
+    
     void add(T element) {
         modCnt++;
         if(cnt == capacity) {
-            capacity = capacity + capacity;
-            T* tmpList = new T [capacity];
-            int i;
-            for(i = 0; i < cnt; i++) {
-                tmpList[i] = array[i];
-            }
-            delete[] array;
-            array = tmpList;
+            expandCapacity();
         }
         array[cnt++] = element;
         return;
     }
-    //done
+    
     T remove(int index) {
         modCnt++;
         T result = array[index];
@@ -164,20 +154,11 @@ public :
         }
         cnt--;
         if(cnt > 0 && cnt*5 < capacity) {
-            capacity = capacity/2;
-            T* tmpList = new T [capacity];
-            int i;
-            for(i = 0; i < cnt; i++) {
-                tmpList[i] = array[i];
-            }
-            delete[] array;
-            array = tmpList;
+            shrinkCapacity();
         }
         return result;
     }
 
-    // tricky, return a pointer, how to ensure this ArrayIterator free properly
-    // can we manage this allocated Iterators by self?
     Iterator<T>* iterator() {
         return new ArrayIterator<int>(this);
     }
