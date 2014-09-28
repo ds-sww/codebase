@@ -10,6 +10,10 @@ template <typename T>
 class Iterator {
     public :
         /**
+        * Add virtual destructor
+        */
+        virtual ~Iterator() {};
+        /**
         * Return true if the iteration has more elements
         */
         virtual bool hasNext() = 0;
