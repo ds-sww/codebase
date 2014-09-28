@@ -11,8 +11,6 @@
 
 using namespace std;
 
-
-
 template <typename T>
 class ArrayList : public List<T> 
 {
@@ -20,51 +18,107 @@ class ArrayList : public List<T>
     	T* Array;
     	int ArraySize;
     	int UsedSize;
-    	//int const DefaultSize;
 
-    	void getspace()
-    	{
-            ;
-    	}
+        int ModifiedTimes;
+
+        T* get_array(int size)
+        {
+            T* ret = new T[size];
+            if (ret == NULL)
+            {
+                cerr << "Memory Allocation Error" << endl;
+            }
+            return ret;
+        }
 
     	void resize(int size)
     	{
-            T *retptr = new T[size];
             if (size <= 0)
             {
                 cerr << "Invalid Array Size" << endl;
-                return;
+                size = ArraySize;
             }
-            if (retptr == NULL)
-            {
-                cerr << "Memory Allocation Error" << endl;
-                return;
-            }
-            for (int i = 0; i < ArraySize && i < size; i++)
-                retptr[i] = Array[i];
+
+            T *retptr = get_array(size);
+            memcpy(retptr, Array, (size < ArraySize ? size : ArraySize));
+
+            delete [] Array;
             ArraySize = size;
             Array = retptr;
     	}
 
+        class ArrayIterator : public Iterator<E>
+        {
+            private:
+                int Index;
+                int ModifiedTimes;
+                ArrayList<T> *Outer;
+
+                void modified_check()
+                {
+                    if(ModifiedTimes != Outer->ModifiedTimes)
+                    {
+                        throw logic_error("the host arrayList has been changed!");
+                    }
+                }
+
+            public:
+                ArrayIterator(ArrayList<T> *sourse)
+                {
+                    Index = 0;
+                    ModifiedTimes = sourse->ModifiedTimes;
+                    this->Outer = sourse;
+                }
+
+                ~ArrayIterator()
+                {
+                    Outer = NULL;
+                }
+
+                bool hasNext()
+                {
+                    modified_check();
+                    if(Index < Outer->UsedSize)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+
+                E next()
+                {
+                    modified_check();
+                    E ret = Outer->Array[Index];
+                    Index++;
+                    return ret;
+                }
+
+        };
 
     public:
     	ArrayList(int size = 1000)
     	{
-    		if(size >= 0)
+    		if(size < 0)
     		{
-                UsedSize = 0;
-    			ArraySize = size;
-    			Array = new T [ArraySize];
+                cerr << "Invalid Array Size" << endl;
+                size = 1000;
     		}
-    		//else
-    			//TODO Error
+            ModifiedTimes = 0;
+            ArraySize = size;
+            UsedSize = 0;
+            Array = new T [ArraySize];
     	}
 
     	ArrayList(const ArrayList <T> &sourse)
     	{
+            ModifiedTimes = sourse.ModifiedTimes;
     		ArraySize = sourse.ArraySize;
     		UsedSize = sourse.UsedSize;
     		Array = new T [ArraySize];
+
     		T* scrptr = sourse.Array;
     		T* destptr = Array;
             memcpy(destptr,scrptr,UsedSize);
@@ -75,9 +129,9 @@ class ArrayList : public List<T>
     		delete [] Array;
     	}
 
-        Iterator<T>* iterator()
+        Iterator<T>* iterator() 
         {
-            ;
+            return new ArrayIterator<int>(this);
         }
 
     	int size() const
@@ -99,10 +153,13 @@ class ArrayList : public List<T>
     		{
     			return Array[index];
     		}
-    		// TODO Error
+    		else
+            {
+                cerr << "Invalid Array Element" << endl;
+            }
     	}
 
-    	void add(T element)
+    	void add(T &element)
     	{
     		if(UsedSize >= ArraySize)
     		{
@@ -110,16 +167,24 @@ class ArrayList : public List<T>
     		}
     		Array[UsedSize] = element;
             UsedSize++;
+            ModifiedTimes++;
     	}
 
     	T remove(int index)
     	{
+            if(index <0 || index >= UsedSize)
+            {
+                cerr << "Invalid Array Element" << endl;
+                return ;
+            }
+
             T ret = Array[index];
             for(int i = index + 1; i < UsedSize; i++)
             {
                 Array[i - 1] = Array[i];
             }
             UsedSize--;
+            ModifiedTimes++;
             if(UsedSize < ArraySize / 3)
             {
                 resize(ArraySize / 3);
