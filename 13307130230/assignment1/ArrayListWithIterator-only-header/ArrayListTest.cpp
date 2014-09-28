@@ -11,7 +11,7 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
-
+#include<stdexcept>
 #include "ArrayList.cpp"
 
 using namespace std;
