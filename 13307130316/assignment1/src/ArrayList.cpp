@@ -6,7 +6,6 @@
  
 #include <iostream>
 #include <cassert>
-#include <cstring>
 #include "List.h"
 
 using namespace std;
@@ -40,19 +39,22 @@ class ArrayList : public List<T>
             }
 
             T *retptr = get_array(size);
-            memcpy(retptr, Array, (size < ArraySize ? size : ArraySize));
-
+            for(int i = 0; i < ArraySize && i < size; i++)
+            {
+                retptr[i] = Array[i];
+            }
             delete [] Array;
             ArraySize = size;
             Array = retptr;
     	}
 
+        template <typename E>
         class ArrayIterator : public Iterator<E>
         {
             private:
                 int Index;
                 int ModifiedTimes;
-                ArrayList<T> *Outer;
+                ArrayList<E> *Outer;
 
                 void modified_check()
                 {
@@ -63,7 +65,7 @@ class ArrayList : public List<T>
                 }
 
             public:
-                ArrayIterator(ArrayList<T> *sourse)
+                ArrayIterator(ArrayList<E> *sourse)
                 {
                     Index = 0;
                     ModifiedTimes = sourse->ModifiedTimes;
@@ -78,14 +80,7 @@ class ArrayList : public List<T>
                 bool hasNext()
                 {
                     modified_check();
-                    if(Index < Outer->UsedSize)
-                    {
-                        return 1;
-                    }
-                    else
-                    {
-                        return 0;
-                    }
+                    return Index < Outer->UsedSize;
                 }
 
                 E next()
@@ -121,7 +116,10 @@ class ArrayList : public List<T>
 
     		T* scrptr = sourse.Array;
     		T* destptr = Array;
-            memcpy(destptr,scrptr,UsedSize);
+            for(int i = 0; i < UsedSize; i++)
+            {
+                destptr[i] = scrptr[i];
+            }
     	}
 
     	~ArrayList()
@@ -156,10 +154,11 @@ class ArrayList : public List<T>
     		else
             {
                 cerr << "Invalid Array Element" << endl;
+                exit(0);
             }
     	}
 
-    	void add(T &element)
+    	void add(const T &element)
     	{
     		if(UsedSize >= ArraySize)
     		{
@@ -175,7 +174,7 @@ class ArrayList : public List<T>
             if(index <0 || index >= UsedSize)
             {
                 cerr << "Invalid Array Element" << endl;
-                return ;
+                exit(0);
             }
 
             T ret = Array[index];

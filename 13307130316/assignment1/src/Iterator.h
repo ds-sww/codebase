@@ -17,6 +17,11 @@ class Iterator {
         *  Returns the next element in the iteration
         */
         virtual T next() = 0;
+
+        // get warn if without this.
+        // http://stackoverflow.com/questions/461203/when-to-use-virtual-destructors        
+        virtual ~Iterator() {
+        }        
 };
 
 #endif
