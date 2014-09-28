@@ -17,8 +17,8 @@ class ArrayList: public List<T> {
 public:
 	ArrayList(){
 		self_size = 0;
-		total_size = 1;
-		list = new T[1];
+		total_size = 16;
+		list = new T[16];
 	}
 	~ArrayList(){
 		delete list;
@@ -56,8 +56,10 @@ public:
 		for(int i=index+1;i<self_size;i++)
 			list[i-1] = list[i];
 		--self_size;
-		if((double)self_size/total_size < 0.2){
+		if(5*self_size < total_size){
 			total_size >>= 1;
+			if(total_size == 0)
+				total_size = 1;
 			T *tmp = new T[total_size];
 			for(int i=0;i<self_size;i++)
 				tmp[i] = list[i];
@@ -66,7 +68,7 @@ public:
 		}
 	}
 };
-
+/*
 int main(){
 	ArrayList<int> q;
 	for(int i=0;i<10;i++)
@@ -84,4 +86,4 @@ int main(){
 	cout << "over" << endl;
 	return 0;
 	
-}
+}*/
