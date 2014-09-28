@@ -36,3 +36,6 @@
 Session.vim
 .netrwhist
 *~
+
+# other
+.DS_Store
