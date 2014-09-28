@@ -6,6 +6,8 @@
  */
 #include <iostream>
 #include <cassert>
+#include <stdexcept>
+#include <exception>
 #include "List.h"
 
 using namespace std;
@@ -32,7 +34,7 @@ class ArrayList : public List<T> {
                                 delete arr ;
                                 arr = temparr ;
                         }
-                        else if( UsedSize < ( Size >> 1 ) )
+                        else if( UsedSize < ( Size >> 2 ) )
                         {
                                 T* temparr = new T[ Size >> 1] ;
                                 for(int i = 0 ; i < (Size>>1) ; i ++)
@@ -64,7 +66,7 @@ class ArrayList : public List<T> {
                 {
                         return arr[index];
                 }
-                void add( T element )
+                void add( const T& element )
                 {
                         checkSize() ;
                         arr[ UsedSize ++ ] = element ;
@@ -73,8 +75,8 @@ class ArrayList : public List<T> {
                 T remove( int index )
                 {
                         T temp ;
-			if( index >= UsedSize ) { cerr << "No such element." << endl ; return temp ;}
-			ArrayChanged = true ;
+						if( index >= UsedSize ) { cerr << "No such element." << endl ; return temp ;}
+						ArrayChanged = true ;
                         temp = arr[index];
                         for(int i = index ; i < UsedSize ; i ++)
                                 arr[i] = arr[i + 1] ;
@@ -106,12 +108,12 @@ class ArrayListIterator: protected Iterator<T>
 	}
 	T next()
 	{
-                if( arrlist->getArrayChanged() ) { throw(string("Array has changed!")) ; return T(); }
+                if( arrlist->getArrayChanged() ) { throw logic_error("Array has changed!") ; return T(); }
                 return arrlist->get( NowPos ++ ) ;
         }
         bool hasNext()
         {
-                if( arrlist->getArrayChanged() ) { throw(string("Array has changed!")) ; return false ;}
+                if( arrlist->getArrayChanged() ) { throw logic_error("Array has changed!") ; return false ;}
                 if( NowPos < arrlist -> size() ) return true ;
                 return false ;
         }

@@ -132,8 +132,8 @@ void iterator_fast_fail_feature(List<int>& list) {
             iter->next();
             list.add(2);
         }
-    } catch (string e) {
-        cout << e << endl;
+    } catch (logic_error e) {
+        cout << e.what() << endl;
     }
 
     delete iter;

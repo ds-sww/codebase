@@ -31,7 +31,7 @@ class ArrayList : public List<T>
                                 delete arr ;
                                 arr = temparr ;
                         }
-                        else if( UsedSize < ( Size >> 1 ) )
+                        else if( UsedSize < ( Size >> 2 ) )
                         {
                                 T* temparr = new T[ Size >> 1] ;
                                 for(int i = 0 ; i < (Size>>1) ; i ++)
@@ -60,7 +60,7 @@ class ArrayList : public List<T>
                 {
                         return arr[index];
                 }
-                void add( T element )
+                void add( const T& element )
                 {
                         checkSize() ;
                         arr[ UsedSize ++ ] = element ;
