@@ -1,7 +1,8 @@
 
 /**
- * @author xuan
- * @date   2014.9.28
+ * @author1 whimsycwd
+ * @author2 XuanYuan
+ * @date   2014.9.26
  * 类似Vector
  */
 #include <iostream>
@@ -12,94 +13,179 @@ using namespace std;
 
 template <typename T>
 class ArrayList : public List<T> {
-public:
-	ArrayList();
-	~ArrayList();
 
-	int size() const;
-    bool isEmpty() const;
-    T get(int index) const;
-    void add(T element);
-    T remove(int index);
+private :
+    T* array;
+    int cnt;
+    int capacity;
 
-private:
-	int capacity;
-	int eleCount;
-	T* list;
+    int modCnt;  // modification counter
+
+    const static int initialCapacity = 16;
+
+    void arrayCopy(T* dest, T* sou, int num) {
+        for (int i = 0; i< num; ++i) {
+            dest[i] = sou[i];
+        }
+    }
+
+    void expandCapacity() {
+        capacity = capacity * 2;
+        T * newArray = new T[capacity];
+        
+        arrayCopy(newArray, array, cnt);
+        
+        delete [] array;
+        array = newArray;
+    }
+    void shrinkCapacity() {
+        // funny thing happen without this line
+        if (capacity <= initialCapacity) {
+            return;
+        }
+
+        capacity = capacity / 2;
+        T * newArray = new T[capacity];
+        
+        arrayCopy(newArray, array, cnt);
+        
+        delete [] array;
+        array = newArray;
+
+    }
+
+    void rangeCheck(int index) const {
+        assert(index >= 0 && index < cnt);
+    }
+       
+    /**
+     * Iterator Implementation
+     */
+
+    template <typename E>
+    class ArrayIterator : public Iterator<E> {
+    private :
+            int itCnt;
+            int itModCnt;
+
+            ArrayList<E>* outer;
+
+            void modifiedCheck() {
+                if (itModCnt != outer->modCnt) {
+                    throw logic_error("the host arrayList has been changed!");
+                }
+            }
+            
+    public :
+            ArrayIterator(ArrayList<E>* outer) {
+                itCnt = 0;
+                itModCnt = outer->modCnt;
+                this->outer = outer;
+            }
+                
+            //done
+            bool hasNext() {
+                modifiedCheck();
+                if (itCnt >= outer->cnt) {
+                    return 0;
+                }
+                return 1;
+            }
+
+            //done
+            E next() {
+                modifiedCheck();
+                return outer->array[itCnt++];
+            }
+        
+            ~ArrayIterator() {
+                outer = 0;
+            }
+                 
+    };
+
+public :
+
+    ArrayList() {
+        capacity = initialCapacity;
+        array = new T[capacity];
+        cnt = 0;
+    }
+
+    ArrayList(int defaultCapacity) {
+        if (defaultCapacity <= initialCapacity) {
+            defaultCapacity = initialCapacity;
+        }
+        capacity = defaultCapacity;
+        array = new T[capacity];
+        cnt = 0;
+            
+    }
+        
+    //done
+    int size() const {
+        return cnt;
+    }
+    //done
+    bool isEmpty() const {
+        if (cnt == 0) {
+            return 1;
+        }
+        return 0;
+    }
+    //done
+    T get(int index) const {
+        //这里其实应该加入index检测
+        return array[index];
+    }
+    //done
+    void add(T element) {
+        modCnt++;
+        if(cnt == capacity) {
+            capacity = capacity + capacity;
+            T* tmpList = new T [capacity];
+            int i;
+            for(i = 0; i < cnt; i++) {
+                tmpList[i] = array[i];
+            }
+            delete[] array;
+            array = tmpList;
+        }
+        array[cnt++] = element;
+        return;
+    }
+    //done
+    T remove(int index) {
+        modCnt++;
+        T result = array[index];
+        int i;
+        for(i = index; i < cnt-1; i++) {
+            array[i] = array[i+1];
+        }
+        cnt--;
+        if(cnt > 0 && cnt*5 < capacity) {
+            capacity = capacity/2;
+            T* tmpList = new T [capacity];
+            int i;
+            for(i = 0; i < cnt; i++) {
+                tmpList[i] = array[i];
+            }
+            delete[] array;
+            array = tmpList;
+        }
+        return result;
+    }
+
+    // tricky, return a pointer, how to ensure this ArrayIterator free properly
+    // can we manage this allocated Iterators by self?
+    Iterator<T>* iterator() {
+        return new ArrayIterator<int>(this);
+    }
+
+    ~ArrayList() {
+        delete [] array;
+    }
+
 };
-
-template <typename T>
-ArrayList<T>::ArrayList() {
-	capacity = 10;
-	eleCount = 0;
-	list = new T [capacity];
-}
-
-template <typename T>
-ArrayList<T>::~ArrayList() {
-	delete[] list;
-}
-
-template <typename T>
-int ArrayList<T>::size() const {
-	return eleCount;
-}
-
-template <typename T>
-bool ArrayList<T>::isEmpty() const {
-	if(eleCount <= 0)
-		return 1;
-	else
-		return 0;
-}
-
-template <typename T>
-T ArrayList<T>::get(int index) const {
-	return list[index];
-}
-
-template <typename T>
-void ArrayList<T>::add(T element) {
-	if(eleCount == capacity) {
-		capacity = capacity + capacity;
-		T* tmpList = new T [capacity];
-		int i;
-		for(i = 0; i < eleCount; i++) {
-			tmpList[i] = list[i];
-		}
-		delete[] list;
-		list = tmpList;
-	}
-	list[eleCount++] = element;
-	return;
-}
-
-template <typename T>
-T ArrayList<T>::remove(int index) {
-	T result = list[index];
-	int i;
-	for(i = index; i < eleCount-1; i++) {
-		list[i] = list[i+1];
-	}
-	eleCount--;
-	if(eleCount > 0 && eleCount*5 < capacity) {
-		capacity = capacity/2;
-		T* tmpList = new T [capacity];
-		int i;
-		for(i = 0; i < eleCount; i++) {
-			tmpList[i] = list[i];
-		}
-		delete[] list;
-		list = tmpList;
-	}
-	return result;
-}
-
-
-
-
-
-
-
 
 
