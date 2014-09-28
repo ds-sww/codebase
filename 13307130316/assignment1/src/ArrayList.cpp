@@ -20,12 +20,6 @@ class ArrayList : public List<T>
     	T* Array;
     	int ArraySize;
     	int UsedSize;
-    	//int const DefaultSize;
-
-    	void getspace()
-    	{
-            ;
-    	}
 
     	void resize(int size)
     	{
@@ -56,8 +50,6 @@ class ArrayList : public List<T>
     			ArraySize = size;
     			Array = new T [ArraySize];
     		}
-    		//else
-    			//TODO Error
     	}
 
     	ArrayList(const ArrayList <T> &sourse)
@@ -74,11 +66,6 @@ class ArrayList : public List<T>
     	{
     		delete [] Array;
     	}
-
-        Iterator<T>* iterator()
-        {
-            ;
-        }
 
     	int size() const
     	{
@@ -99,7 +86,6 @@ class ArrayList : public List<T>
     		{
     			return Array[index];
     		}
-    		// TODO Error
     	}
 
     	void add(T element)
