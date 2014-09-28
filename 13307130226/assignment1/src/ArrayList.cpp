@@ -34,38 +34,37 @@ public:
 			return false;
 	}
 	T get(int index) const {
+		//需要写边界检查吗...如果超出了要返回什么啊...
 		return list[index];
 	}
-	void add(const T& element){
-		if(total_size > self_size){
-			list[self_size] = element;
-			++self_size;
-		}else{
+	void checkSize(){
+		if(total_size <= self_size + 1){
 			total_size <<= 1;
-			T *tmp = new T[total_size];
-			for(int i=0;i<self_size;i++)
-				tmp[i] = list[i];
-			delete list;
-			list = tmp;
-			list[self_size] = element;
-			++self_size;
-		}	
+		}else if(total_size > self_size*5){
+			total_size >>= 1;
+			if(total_size == 0)
+				total_size = 1;
+		}else{
+			return;
+		}
+		T *tmp = new T[total_size];
+		for(int i=0;i<self_size;i++)
+			tmp[i] = list[i];
+		delete list;
+		list = tmp;
+	}
+	void add(const T& element){
+		checkSize();
+		list[self_size] = element;
+		++self_size;
+		
 	}
 	T remove(int index){
 		int re = get(index);
 		for(int i=index+1;i<self_size;i++)
 			list[i-1] = list[i];
 		--self_size;
-		if(5*self_size < total_size){
-			total_size >>= 1;
-			if(total_size == 0)
-				total_size = 1;
-			T *tmp = new T[total_size];
-			for(int i=0;i<self_size;i++)
-				tmp[i] = list[i];
-			delete list;
-			list = tmp;
-		}
+		checkSize();
 	}
 };
 /*
