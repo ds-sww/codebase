@@ -5,6 +5,7 @@
  * 类似Vector
  */
 #include <memory>
+#include <cstring>
 #include <stdexcept>
 #include "List.h"
 
