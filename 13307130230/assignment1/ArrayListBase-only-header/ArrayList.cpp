@@ -56,9 +56,9 @@ class ArrayList : public List<T>
             int tmp=array[index];
             for (int i=index;i<cnt-1;i++) array[i]=array[i+1];
             cnt--;
-            if (cnt<cap/2&&cap>defoultcap)
+            if (cnt<cap/4&&cap>defoultcap)
             {
-                cap/=2;
+                cap/=4;
                 T *newarr=new T[cap];
                 for (int i=0;i<cnt;i++) newarr[i]=array[i];
                 delete [] array;
