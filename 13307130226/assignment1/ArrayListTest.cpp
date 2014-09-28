@@ -83,15 +83,14 @@ void random_insert_delete_entrys(double insertFactor) {
     int numOfOp = 100000;
 
     for (int i = 0; i < numOfOp; ++i) {
-        int op = random() % 10; 
+        int op = rand() % 10; 
         if (op <= insertFactor) {
             int num = rand() % 1000000;
             list.add(num);            
             vec.push_back(num);
         } else {
             if (vec.size() > 0) {
-                int num = random() % vec.size();
-
+                int num = rand() % vec.size();
                 erase(vec, num);
                 list.remove(num);
             }           
