@@ -1,5 +1,4 @@
 #include<iostream>
-#include<cstdio>
 #include<cassert>
 #include<stdexcept>
 #include"List.h"
