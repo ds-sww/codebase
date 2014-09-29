@@ -44,48 +44,6 @@ class ArrayList:public List<T>
 				throw logic_error("the host arrayList has been changed!");
 		}
 	};
-/*
-        template <typename E>
-        class ArrayIterator : public Iterator<E> {
-            private :
-                int itCnt;
-                int itModCnt;
-
-                ArrayList<E>* outer;
-
-                void modifiedCheck() {
-                    if (itModCnt != outer->List_Time) {
-                        throw logic_error("the host arrayList has been changed!");
-                    }
-                }
-            
-            public :
-                ArrayIterator(ArrayList<E>* outer) {
-                    itCnt = 0;
-                    itModCnt = outer->List_Time;
-                    this->outer = outer;
-                }     
-                
-                bool hasNext() {
-                    modifiedCheck();
-                    
-                    return itCnt < outer->List_Size;
-                }
-                E next() {
-                    modifiedCheck();
-                    
-                    if (itCnt >= outer->List_Size) {
-                        throw out_of_range("ArrayIterator");
-                    }
-
-                    return outer->get(itCnt++);
-                }
-                virtual ~ArrayIterator() {
-                    outer = 0;
-                }
-                 
-        };
-*/
 public:
 	ArrayList()
 	{
