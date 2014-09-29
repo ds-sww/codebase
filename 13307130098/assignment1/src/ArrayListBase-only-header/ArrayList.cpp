@@ -9,19 +9,19 @@
 #include "List.h"
 
 using namespace std;
-
+#define the_magic_number 30
 template <typename T>
 class ArrayList : public List<T> {
 private:
 	int version;
-	T *link[30];
+	T *link[the_magic_number];
 	int sz;
-	int pow2[30];
+	int pow2[the_magic_number];
 	
 	int getPos(int index) const
 	{
-		assert(0<index&&index<pow2[29]);
-		int l=0,r=29;
+		assert(0<index&&index<pow2[the_magic_number-1]);
+		int l=0,r=the_magic_number-1;
 		while(l<r)
 		{
 			int md=(l+r)/2;
@@ -47,7 +47,7 @@ public:
 		version=sz=0;
 		memset(link,0,sizeof(link));
 		pow2[0]=1;
-		for(int i=1;i<30;i++)
+		for(int i=1;i<the_magic_number;i++)
 			pow2[i]=pow2[i-1]*2;
 	}
 
