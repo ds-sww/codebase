@@ -1,7 +1,7 @@
 /**
  * @author whimsycwd
  * @date   2014.9.27
- * è¿­ä»£å™¨ç±»ï¼Œ é€šè¿‡è¯¥ç±»ï¼Œå¯ä»¥éåŽ†å®¹å™¨
+ * µü´úÆ÷Àà£¬ Í¨¹ý¸ÃÀà£¬¿ÉÒÔ±éÀúÈÝÆ÷
  */
 #ifndef _ITERATOR_H
 #define _ITERATOR_H 1
