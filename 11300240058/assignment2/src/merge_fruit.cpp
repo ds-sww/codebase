@@ -1,3 +1,8 @@
+/**
+ * Author   : Ryannnnnnn
+ * Date     : Sep 30, 2014
+ */
+
 #include <cstdio>
 #include <vector>
 #include <queue>
