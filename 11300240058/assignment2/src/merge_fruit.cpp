@@ -44,8 +44,6 @@ public:
     }
 };
 
-const int MAXN = 10000;
-
 int main() {
     int n, weight;
     vector <int> weights;
