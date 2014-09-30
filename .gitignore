@@ -20,7 +20,7 @@
 *.x86_64
 *.hex
 *.exe
-*.out
+a.out
 *.app
 
 # Shared objects (inc. Windows DLLs)
