@@ -53,12 +53,17 @@ public:
         while (!q.empty()) {
             State current = q.front(); q.pop();
             for (int dir = 0; dir < 4; dir++) {
-                State next = State(Point(current.p.x + dx[dir], current.p.y + dy[dir]), current.hasKey, current.step + 1);
+                State next = State(Point(current.p.x + dx[dir], current.p.y + dy[dir]),
+                                   current.hasKey, current.step + 1);
+
                 if (next.p.x < 0 || next.p.x >= n || next.p.y < 0 || next.p.y >= m) continue; // Range check
+
                 if (map[next.p.x][next.p.y] == 'K') next.hasKey = true; // Key
                 if (map[next.p.x][next.p.y] == '#') continue; // Blocked
                 if (!next.hasKey && map[next.p.x][next.p.y] == 'D') continue; // Door
                 if (map[next.p.x][next.p.y] == 'T') return next.step; // Destination
+
+                // If not visited, push to queue
                 if (!visited[next.p.x][next.p.y][next.hasKey]) {
                     q.push(next);
                     visited[next.p.x][next.p.y][next.hasKey] = true; // Mark the statement as visited
