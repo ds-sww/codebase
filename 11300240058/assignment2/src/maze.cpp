@@ -31,7 +31,7 @@ class Maze {
 private:
     static const int MAXN = 20, MAXM = 20;
 
-    Point startPoint, endPoint;
+    Point startPoint;
     bool visited[MAXN][MAXM][2];
 
 public:
@@ -42,8 +42,6 @@ public:
             for (int j = 0; j < m; j++)
                 if (map[i][j] == 'S')
                     startPoint = Point(i, j);
-                else if (map[i][j] == 'T')
-                    endPoint = Point(i, j);
 
         // Breadth-First Search (BFS)
         queue <State> q;
