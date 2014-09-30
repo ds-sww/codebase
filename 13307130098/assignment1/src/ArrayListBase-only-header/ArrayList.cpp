@@ -1,4 +1,4 @@
-
+﻿
 /**
  * @author whimsycwd
  * @date   2014.9.26
@@ -96,7 +96,8 @@ public:
 		}
 
 		pos=getPos(sz);
-		if(sz==pow2[pos]&&link[pos+1]!=NULL)
+		int reserved = 6;
+		if(sz==pow2[pos]&&link[pos+1]!=NULL&&pos>reserved)
 		{
 			delete [] link[pos+1];
 			link[pos+1]=NULL;
