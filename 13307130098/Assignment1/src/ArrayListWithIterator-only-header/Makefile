@@ -1,7 +1,7 @@
 all:	compile run clean
 
 compile:
-	g++ ArrayListTest.cpp ArrayList.cpp -o ArrayListTest
+	g++ -O2 ArrayListTest.cpp ArrayList.cpp -o ArrayListTest
 
 run:
 	./ArrayListTest
