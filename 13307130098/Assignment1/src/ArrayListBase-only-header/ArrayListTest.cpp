@@ -16,6 +16,8 @@
 
 using namespace std;
 
+#define random rand
+
 
 void insert_million_entry() {
     cout << "insert_million_entry start" << endl;
