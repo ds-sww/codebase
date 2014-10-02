@@ -14,7 +14,6 @@ template <typename Item>
 class ArrayList : public List<Item> {
 
     const static int INIT_CAP = 1024;
-    const static int BUFF_LEN = 256;
 
     Item *_arr;
     int _cap, _size;
@@ -30,6 +29,14 @@ class ArrayList : public List<Item> {
         delete[] _tmp;
     }
 
+    void _copy(const ArrayList& other)
+    {
+        _ver = other._ver;
+        _cap = other._cap;
+        _size = other._size;
+        _arr = new Item[_cap];
+        memcpy(_arr, other._arr, _cap * sizeof(Item));
+    }
 
 public:
 
@@ -39,6 +46,19 @@ public:
         _arr = new Item[_cap];
         _size = 0;
         _ver = 0;
+    }
+
+    ArrayList (const ArrayList & other)
+    {
+        _copy(other);
+    }
+
+    ArrayList & operator=(const ArrayList &other)
+    {
+        if (this != &other) {
+            _copy(other);
+        }
+        return *this;
     }
 
     ~ArrayList ()
@@ -82,7 +102,7 @@ public:
         Item _ret = _arr[index];
         for (int i = index; i < _size - 1; i++) _arr[i] = _arr[i + 1];
         _size --;
-        if (_size <= (_cap >> 1) - BUFF_LEN && _cap > INIT_CAP) _resize(false);
+        if (_size <= (_cap >> 2) && _cap > INIT_CAP) _resize(false);
         return _ret;
     }
 
