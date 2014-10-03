@@ -1,4 +1,4 @@
-
+﻿
 /**
  * @author sunqinzheng
  * @date   2014.10.2
@@ -26,6 +26,7 @@ private:
 	int pow2[MAX_LENGTH];
 	T* link[MAX_LENGTH];
 	//myfunc
+	ArrayList(const ArrayList&);
 	int getPos(int index) const;
 	void change(int index, T element);
 	//class
@@ -42,6 +43,7 @@ private:
 		//func
 		ArrayIterator();
 		ArrayIterator(ArrayList<U>* r);
+		ArrayList& operator=(const ArrayList&);
 		bool hasNext();
 		U next();
 
@@ -50,6 +52,7 @@ private:
 	public:
 		//func
 		ArrayList();
+		~ArrayList();
 		int size() const;
 	    bool isEmpty() const;
 	    T get(int index) const;
@@ -92,6 +95,18 @@ ArrayList<T>::ArrayList()
 	for(int i = 1; i < MAX_LENGTH; i++)
 	{
 		pow2[i] = pow2[i-1] << 1;
+	}
+}
+
+template <typename T>
+ArrayList<T>::~ArrayList()
+{
+	for(int i = 0; i < MAX_LENGTH; i++)
+	{
+		if(link[i] != NULL)
+		{
+			delete [] link[i];
+		}
 	}
 }
 
