@@ -1,4 +1,4 @@
-
+﻿
 /**
  * @author sunqinzheng
  * @date   2014.10.2
@@ -25,6 +25,7 @@ private:
 	T* link[MAX_LENGTH];
 	//myfunc
 	ArrayList(const ArrayList&);
+	ArrayList& operator=(const ArrayList&);
 	int getPos(int index) const;
 	void change(int index, T element);
 

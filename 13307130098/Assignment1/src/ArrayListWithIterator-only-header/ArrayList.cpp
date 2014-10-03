@@ -1,4 +1,4 @@
-
+﻿
 /**
  * @author sunqinzheng
  * @date   2014.10.2
@@ -43,6 +43,7 @@ private:
 		//func
 		ArrayIterator();
 		ArrayIterator(ArrayList<U>* r);
+		ArrayList& operator=(const ArrayList&);
 		bool hasNext();
 		U next();
 
