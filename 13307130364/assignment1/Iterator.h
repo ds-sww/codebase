@@ -1,8 +1,3 @@
-/**
- * @author whimsycwd
- * @date   2014.9.27
- * 迭代器类， 通过该类，可以遍历容器
- */
 #ifndef _ITERATOR_H
 #define _ITERATOR_H 1
 

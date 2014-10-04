@@ -1,10 +1,3 @@
-/**
- * @author whimsycwd
- * @date   2014.9.26
- * 只测试了Type = int 的情况
- */
-
-
 #include <iostream>
 #include <cstdio>
 #include <cassert>
