@@ -12,14 +12,29 @@
 #include<vector>
 #include<algorithm>
 
-#include "Node.h"
 
 using namespace std;
 
 const static int NIL_CONST = -1;
-static Node * Nil = new Node(NIL_CONST);   // sentinel
 
 struct BSTIterator;
+
+class Node {
+    public :
+        int key;            // node key        
+        Node * lc;          // left child
+        Node *  rc;         // right child
+        Node * p;           // parent
+        int size;           // size of subtree
+
+       
+        // this constuctor used by Nil
+        Node(int _key) : key(_key), lc(0), rc(0), p(0), size(0) {
+        }
+       
+};
+
+static Node * Nil = new Node(NIL_CONST);   // sentinel
 
 class BST {
     
