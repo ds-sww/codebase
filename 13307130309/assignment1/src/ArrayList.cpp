@@ -179,4 +179,5 @@ int main()
 	
     printf("%d %d %d %d %d\n",S.get(0),S.get(1),S.get(2),S.get(3),S.isEmpty()); 
 	return 0;
+*/
 }*/
