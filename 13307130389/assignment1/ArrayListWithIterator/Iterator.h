@@ -19,4 +19,5 @@ class Iterator {
         virtual T next() = 0;
 };
 
+
 #endif
