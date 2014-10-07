@@ -22,7 +22,7 @@ class ArrayList : public List<T> {
                 int Size ;
                 int UsedSize ;
                 T* arr ;
-                bool ArrayChanged ;
+                long long ArrayChanged ;
 
                 void checkSize()
                 {
@@ -51,10 +51,9 @@ class ArrayList : public List<T> {
                         Size = 2 ;
                         UsedSize = 0;
                         arr = new T[2] ;
-                        ArrayChanged = false;
+                        ArrayChanged = 0;
                 }
-                bool getArrayChanged() { return ArrayChanged ;}
-                bool resetArrayChanged() { ArrayChanged = false ;}
+                long long getArrayStatus() const { return ArrayChanged ; }
                 int size() const
                 {
                         return UsedSize ;
@@ -71,13 +70,13 @@ class ArrayList : public List<T> {
                 {
                         checkSize() ;
                         arr[ UsedSize ++ ] = element ;
-                        ArrayChanged = true ;
+                        ArrayChanged ++ ;
                 }
                 T remove( int index )
                 {
                         T temp ;
 						if( index >= UsedSize ) { cerr << "No such element." << endl ; return temp ;}
-						ArrayChanged = true ;
+						ArrayChanged ++ ;
                         temp = arr[index];
                         for(int i = index ; i < UsedSize ; i ++)
                                 arr[i] = arr[i + 1] ;
@@ -100,21 +99,22 @@ class ArrayListIterator: protected Iterator<T>
     protected:
 	ArrayList<T>* arrlist ;
 	int NowPos ;
+	long long ArrStatus ;
    public :
 	ArrayListIterator(ArrayList<T>* ait)
 	{
 		arrlist = ait ;
-		ait -> resetArrayChanged() ;
 		NowPos = 0 ;
+		ArrStatus = ait -> getArrayStatus() ;
 	}
 	T next()
 	{
-                if( arrlist->getArrayChanged() ) { throw logic_error("Array has changed!") ; return T(); }
+                if( arrlist->getArrayStatus() != ArrStatus ) { throw logic_error("Array has changed!") ; return T(); }
                 return arrlist->get( NowPos ++ ) ;
         }
         bool hasNext()
         {
-                if( arrlist->getArrayChanged() ) { throw logic_error("Array has changed!") ; return false ;}
+                if( arrlist->getArrayStatus() != ArrStatus ) { throw logic_error("Array has changed!") ; return false ;}
                 if( NowPos < arrlist -> size() ) return true ;
                 return false ;
         }
