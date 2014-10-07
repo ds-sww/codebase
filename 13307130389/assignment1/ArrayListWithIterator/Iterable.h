@@ -10,7 +10,7 @@
 #include "Iterator.h"
 
 template <typename T>
-class Iterable{
+class Iterable{ 
     public :
         virtual Iterator<T>* iterator() = 0;
 };
