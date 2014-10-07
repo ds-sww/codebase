@@ -1,6 +1,6 @@
 /**
  * @author forward
- * @date   2014.10.06
+ * @date   2014.10.07
  * 
  */
 
@@ -112,10 +112,11 @@ void iterate_through_list(ArrayList<int>& list) {
     ArrayList<int>::iterator it = list.begin();
     while(it != list.end()) {
         assert(*it ==  list[it - list.begin()]);
+        cout<<*it;
         it++;
         it--;
-        ++it;
-        --it;
+        ++it = it;
+        --it = it;
         it++;
     }
 

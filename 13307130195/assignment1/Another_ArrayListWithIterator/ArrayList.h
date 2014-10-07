@@ -1,6 +1,6 @@
 /**
  * @author forward
- * @date   2014.10.06
+ * @date   2014.10.07
  * 类似Vector
  */
 
@@ -19,7 +19,6 @@ class ArrayList {
 
     Item *_arr;
     int _cap, _size;
-    long long _ver;
 
     void _resize(bool _enlarge)
     {
@@ -33,7 +32,6 @@ class ArrayList {
 
     void _copy(const ArrayList& other)
     {
-        _ver = other._ver;
         _cap = other._cap;
         _size = other._size;
         _arr = new Item[_cap];
@@ -47,7 +45,6 @@ public:
         _cap = INIT_CAP;
         _arr = new Item[_cap];
         _size = 0;
-        _ver = 0;
     }
 
     ArrayList (const ArrayList & other)
@@ -97,7 +94,6 @@ public:
     {
         if (_size + 1 == _cap) _resize(true);
         _arr[_size++] = element;
-        _ver ++;
     }
 
     Item remove(int index)
@@ -105,7 +101,6 @@ public:
         if (index < 0 || index >= _size) {
             throw std::logic_error("out of range");
         }
-        _ver ++;
         Item _ret = _arr[index];
         for (int i = index; i < _size - 1; i++) _arr[i] = _arr[i + 1];
         _size --;
@@ -114,45 +109,34 @@ public:
     }
 
     struct iterator {
+    private:
+        const ArrayList<Item> *list;
+        const int end;
+        int pos;
 
-        ArrayList<Item> *list;
-        int pos, end;
-        long long ver;
-
-        // void validateIterator() const
-        // {
-        //     if (ver != list->_ver || pos < 0 || pos > end) 
-        //         throw std::logic_error("this iterator is not valid!");
-        // }
-
-        void _copy(const iterator& other)
+    public:
+        iterator(ArrayList<Item> *_list, bool isEnd) : end(_list->_size)
         {
-            ver = other.ver;
-            pos = other.pos;
-            list = other.list;
-            end = other.end;
-        }
-
-        iterator(ArrayList<Item> *_list, int _pos)
-        {
-            pos = _pos;
             list = _list;
-            ver = _list->_ver;
-            end = _list->_size;
+            pos = isEnd ? end : 0;
         }
 
-        iterator (const iterator & other)
+        iterator (const iterator & other) : end(other.end)
         {
-            _copy(other);
+            list = other.list;
+            pos = other.pos;
         }
 
         iterator & operator=(const iterator &other)
         {
             if (this != &other) {
-                _copy(other);
+                list = other.list;
+                pos = other.pos;
+                *const_cast<int*>(&end) = other.end;
             }
             return *this;
         }
+
 
         Item * operator ->() const
         {
@@ -186,7 +170,7 @@ public:
         iterator operator --(int)
         {
             iterator _tmp = *this;
-            _tmp.pos--;
+            pos--;
             return _tmp;
         }
 
@@ -209,12 +193,12 @@ public:
 
     iterator begin()
     {
-        return iterator(this, 0);
+        return iterator(this, false);
     }
 
     iterator end()
     {
-        return iterator(this, _size);
+        return iterator(this, true);
     }
 };
 
