@@ -4,7 +4,6 @@
  * 只测试了Type = int 的情况
  */
 
-
 #include <iostream>
 #include <cstdio>
 #include <cassert>
@@ -14,8 +13,9 @@
 
 #include "ArrayList.cpp"
 
-using namespace std;
+#define random rand
 
+using namespace std;
 
 void insert_million_entry(List<int>& list) {
     cout << "insert_million_entry start" << endl;
