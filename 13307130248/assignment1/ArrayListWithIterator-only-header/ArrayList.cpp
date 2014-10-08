@@ -10,8 +10,43 @@
 
 using namespace std;
 
+const int MINCAPACITY = 10;
+
 template <typename T>
 class ArrayList : public List<T> {
+
+	template <typename U>
+	class ArrayListIterator : public Iterator<U>
+	{
+	private:
+		ArrayList<U> *arrayList;
+		int index;
+	public:
+		ArrayListIterator()
+		{
+		}
+
+		ArrayListIterator(ArrayList<U> *_arrayList)
+		{
+			index = 0;
+			arrayList = _arrayList;
+		}
+
+		~ArrayListIterator()
+		{
+		}
+
+		// Iterator.h
+        bool hasNext()
+        {
+        	return index < arrayList->mSize - 1;
+        }
+
+        T next()
+        {
+        	return arrayList->array[index++];
+        }
+	};
 
 private:
 
@@ -48,6 +83,8 @@ public:
 		delete[] array;
 	}
 
+	// List.h
+
 	int size() const
 	{
 		return mSize;
@@ -63,7 +100,7 @@ public:
 		return array[index];
 	}
 
-	void add(T& element)
+	void add(const T &element)
 	{
 		// capacity is not enough
 		if(mSize == mCapacity)
@@ -91,5 +128,12 @@ public:
 		}
 
 		return element;
+	}
+
+	// Iterable.h
+	Iterator<T>* iterator()
+	{
+		ArrayListIterator<T> *_iterator= new ArrayListIterator<T>(this);
+		return _iterator;
 	}
 };

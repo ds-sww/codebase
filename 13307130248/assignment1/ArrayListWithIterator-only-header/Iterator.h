@@ -17,6 +17,7 @@ class Iterator {
         *  Returns the next element in the iteration
         */
         virtual T next() = 0;
+
 };
 
 #endif
