@@ -117,6 +117,9 @@ void iterate_through_list(List<int>& list) {
         assert(list.get(cnt++) == iter->next());
     }
 
+    //测试hasNext()是否正确
+    assert(cnt == list.size());
+
     delete iter;
     cout << "iterate_through_list end" << endl;
 
@@ -142,7 +145,7 @@ void iterator_fast_fail_feature(List<int>& list) {
 }
 
 int main() {
-   
+
     ArrayList<int> list;
     insert_million_entry(list);
     

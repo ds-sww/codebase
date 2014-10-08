@@ -20,7 +20,8 @@ class ArrayList : public List<T> {
 	{
 	private:
 		ArrayList<U> *arrayList;
-		int index;
+		int index, version;
+
 	public:
 		ArrayListIterator()
 		{
@@ -30,6 +31,7 @@ class ArrayList : public List<T> {
 		{
 			index = 0;
 			arrayList = _arrayList;
+			version = arrayList->version;
 		}
 
 		~ArrayListIterator()
@@ -39,11 +41,13 @@ class ArrayList : public List<T> {
 		// Iterator.h
         bool hasNext()
         {
-        	return index < arrayList->mSize - 1;
+        	return index < arrayList->mSize;
         }
 
         T next()
         {
+        	if(version != arrayList->version)
+        		throw logic_error("The arrayList has already been changed.");
         	return arrayList->array[index++];
         }
 	};
@@ -51,7 +55,7 @@ class ArrayList : public List<T> {
 private:
 
 	T *array;
-	int mCapacity, mSize;
+	int mCapacity, mSize, version;
 
 	void resize(int n, T val = T())
 	{
@@ -73,6 +77,7 @@ public:
 
 	ArrayList()
 	{
+		version = 0;
 		mSize = 0;
 		mCapacity = MINCAPACITY;
 		array = new T[mCapacity]();
@@ -102,6 +107,7 @@ public:
 
 	void add(const T &element)
 	{
+		++version;
 		// capacity is not enough
 		if(mSize == mCapacity)
 		{
@@ -113,6 +119,8 @@ public:
 
 	T remove(int index)
 	{
+		++version;
+
 		int element = array[index];
 		
 		mSize--;
