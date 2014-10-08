@@ -10,6 +10,8 @@
 
 using namespace std;
 
+const int MINCAPACITY = 10;
+
 template <typename T>
 class ArrayList : public List<T> {
 
@@ -21,7 +23,9 @@ private:
 	void resize(int n, T val = T())
 	{
 		T *old_array = array;
-		mCapacity <<= 1;
+		
+		mCapacity = n;
+
 		array = new T[mCapacity]();
 
 		for(int i = 0; i < mSize; i++)
@@ -37,14 +41,7 @@ public:
 	ArrayList()
 	{
 		mSize = 0;
-		mCapacity = 10;
-		array = new T[mCapacity]();
-	}
-
-	ArrayList(int capacity)
-	{
-		mCapacity = capacity;
-		mSize = 0;
+		mCapacity = MINCAPACITY;
 		array = new T[mCapacity]();
 	}
 
@@ -88,6 +85,11 @@ public:
 		for(int i = index; i < mSize; i++)
 		{
 			array[i] = array[i + 1];
+		}
+
+		if(mCapacity > MINCAPACITY && double(mSize) / mCapacity < 0.20)
+		{
+			resize(max(MINCAPACITY, mSize << 1));
 		}
 
 		return element;
