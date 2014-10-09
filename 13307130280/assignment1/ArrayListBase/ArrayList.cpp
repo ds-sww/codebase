@@ -1,120 +1,89 @@
 
 /**
- * @author whimsycwd
- * @date   2014.9.26
+ * @author qini7
+ * @date   2014.10.07
  * 类似Vector
  */
-#include <iostream>
-#include <cassert>
-#include "List.h"
-
+#include<iostream>
+#include<cassert>
+#include<stdexcept>
+#include"List.h"
 using namespace std;
 
 template <typename T>
-class ArrayList : public List<T> {
+class ArrayList:public List<T>
+{
 
-    private :
-        T* array;
-        int cnt;
-        int capacity;
+public:
+	ArrayList()
+	{
+		array=new T;
+		list_size=0;
+		list_msize=1;
+	}
+	~ArrayList()
+	{
+		delete[] array;
+	}
+	int size() const
+	{	
+		return list_size;
+	}
+	bool isEmpty() const
+	{
+		return (!list_size);
+	}
+	T get(int index) const
+	{
+		assert(index>=0 && index<list_size);
+		return array[index]; 
+	}
+	void add(const T& element)
+	{
+		if (list_msize>list_size)
+		{
+			array[list_size++]=element;
+		}
+		else
+		{
+			T *tarray;
+			tarray=array;
+			list_msize+=list_msize;
+			array=new T[list_msize];
+			for (int i=0;i<list_size;i++)
+				array[i]=tarray[i];
+			delete[] tarray;
+			array[list_size++]=element;
+		}
+	}
+	T remove(int index)
+	{
 
-
-        const static int initialCapacity = 16;
-
-        void arrayCopy(T* dest, T* sou, int num) {
-            for (int i = 0; i< num; ++i) {
-                dest[i] = sou[i];
-            }
-        }
-
-        void expandCapacity() {
-            capacity = capacity * 2;
-            T * newArray = new T[capacity];    
-            
-            arrayCopy(newArray, array, cnt);
-
-            delete [] array;
-            array = newArray;
-        }
-        void shrinkCapacity() {
-            // funny thing happen without this line
-            if (capacity <= initialCapacity) {
-                return;
-            }
-
-            capacity = capacity / 2;
-            T * newArray = new T[capacity];
-            
-            arrayCopy(newArray, array, cnt);
-
-            delete [] array;
-            array = newArray;
-
-        }
-
-        void rangeCheck(int index) const {
-            assert(index >= 0 && index < cnt);
-        }
-       
-
-    public :
-
-        ArrayList() {
-            capacity = initialCapacity;
-            array = new T[capacity];
-            cnt = 0;
-        }
-
-        ArrayList(int defaultCapacity) {
-            if (defaultCapacity <= initialCapacity) {
-                defaultCapacity = initialCapacity;
-            }
-            capacity = defaultCapacity;
-            array = new T[capacity];
-            cnt = 0;
-            
-        }
-
-        int size() const {
-            return cnt;
-        }
-        bool isEmpty() const {
-            return cnt == 0;
-        }
-        T get(int index) const {
-            rangeCheck(index);
-        
-            return array[index];
-        }
-        void add(const T& element) {
-            if (cnt == capacity) {
-                expandCapacity();
-            }
-            array[cnt++] = element; 
-        } 
-        
-        T remove(int index) {
-            rangeCheck(index);
-            
-            T retValue = array[index];
-
-            for (int i = index; i < cnt-1; ++i) {
-                array[i] = array[i + 1];
-            }
-
-            // TODO: suitable? 
-            array[--cnt] = 0;
-
-            if (cnt <= capacity / 4) {
-                shrinkCapacity();
-            }
-            return retValue;
-        }
-
-        ~ArrayList() {
-            delete [] array;
-        }
-
+		T temp;
+		assert(index>=0 && index<list_size);
+		temp=array[index];
+		if (list_size<=(list_msize>>2))
+		{	
+			list_msize>>1;
+			T *tarray;
+			tarray=array;
+			array=new T[list_msize];
+			for (int i=0;i<list_size;i++)
+			{
+				if (i<index) array[i]=tarray[i];
+				else array[i]=tarray[i+1];
+			}
+			delete[] tarray;
+		}
+		else
+		{
+			for (int i=index;i<list_size-1;i++)
+				array[i]=array[i+1];
+		}
+		array[--list_size]=0;
+		return temp;
+	}
+private:
+	T *array;
+	int list_size,list_msize;
 };
-
-
