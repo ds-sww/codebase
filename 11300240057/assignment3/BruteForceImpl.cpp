@@ -20,7 +20,6 @@ class BruteForceImpl : public Matcher {
 
     public :
         explicit BruteForceImpl(const string& pattern) {
-            // will this copy reference or content??
             this->pattern = pattern;  
         }
 
@@ -28,9 +27,7 @@ class BruteForceImpl : public Matcher {
             if (text.size() < pattern.size()) {
                 return NOT_FOUND;
             }
-            //printf("text : %s\npattern : %s\n", text.c_str(), pattern.c_str());          
-            
-            // must <= istead of <
+            // must `<=` instead of `<`
             for (int i = 0; i <= text.size() - pattern.size(); ++i) {
                 
                 bool isMatch = true;

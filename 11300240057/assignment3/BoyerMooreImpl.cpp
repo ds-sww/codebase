@@ -20,7 +20,7 @@ class BoyerMooreImpl : public Matcher {
         string pattern;
         const static int CHARS_NUM = 256;
         
-        int badCharShift[CHARS_NUM];    // 下标是字母， 内容是放生不匹配时下次pattern中出现该字母的偏移量
+        int badCharShift[CHARS_NUM];    // 下标是字母， 内容是发生不匹配时下次pattern中出现该字母的偏移量
         vector<int> goodSuffixShift;    // 下标范围是0..pattern.size() - 1, 当 i+1..pattern.size() - 1 match的时候的至少偏移量
 
         void preprocessBadCharShift() {

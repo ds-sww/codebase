@@ -44,16 +44,11 @@ class KMPImpl : public Matcher {
 
             int pText = 0;
             int pPattern = 0;
-           /* 
-            for (int i = 0; i < pattern.size(); ++i) {
-                printf("%d\n", fail[i]);
-            }
-            */
+
             while (pText < text.size()) {
                 while (pPattern !=-1 && text[pText] != pattern[pPattern]) {
                     pPattern = fail[pPattern];
                 }
-             //   printf("%d %d\n", pText, pPattern);
                 ++pText;
                 ++pPattern;
                 

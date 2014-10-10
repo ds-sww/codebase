@@ -252,6 +252,8 @@ class RBTree {
             if (y_original_color == BLACK) 
                 delete_fixup(x);
 
+            if (z == root)   root = Nil;        // trap 
+            
             delete z;   // destroy
 
         }

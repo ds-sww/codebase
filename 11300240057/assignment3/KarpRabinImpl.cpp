@@ -56,10 +56,7 @@ class KarpRabinImpl : public Matcher {
                 hash = (hash * 2 + text[i]) % MOD;
             }
 
-            //printf("text : %s\npattern : %s\n", text.c_str(), pattern.c_str());
-
             for (int i = 0; i < text.size() - pattern.size(); ++i) {
-              //  printf("hash : %d, patternHash : %d\n", hash, hashPattern);
                 if (hash == hashPattern && text.compare(i, pattern.size(), pattern) == 0) {
                     return i;
                 } 

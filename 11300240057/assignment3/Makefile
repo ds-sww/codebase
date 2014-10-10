@@ -7,6 +7,8 @@ compile :
 genData :
 	./Main genData
 
+allImpl : BF KR KMP BM
+
 BF :
 	./Main BF
 

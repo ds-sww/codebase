@@ -123,6 +123,9 @@ class BST {
                 y->lc->p = y;
                 transplant(z, y);
             }
+            
+
+            if (z == root)  root = Nil;
 
             delete z;   // destroy
 
