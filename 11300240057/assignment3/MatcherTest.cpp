@@ -15,6 +15,7 @@
 #include "KarpRabinImpl.cpp"
 #include "KMPImpl.cpp"
 #include "BoyerMooreImpl.cpp"
+#include "AutomataImpl.cpp"
 
 using namespace std;
 
@@ -48,6 +49,9 @@ Matcher * getImpl(const string& pattern) {
     }
     if (type == 4) {
         return new BoyerMooreImpl(pattern);
+    }
+    if (type == 5) {
+        return new AutomataImpl(pattern);
     }
 
     return 0;
@@ -243,15 +247,20 @@ int main(int argc, char * argv[]) {
             type = 4;
             cout << "Boyer-Moore" << endl;
         }
+        if (strcmp(argv[1], "Automata") == 0) {
+            type = 5;
+            cout << "Automata" << endl;
+        }
         if (strcmp(argv[1], "genData") == 0) {
             cout << "genData" << endl;
             genData();
+            return 0;
         }
     }
     if (type != -1) {
         test_naive();
     } else {
-        cout << "Only one parameter in (BF | KR | KMP | BM)" << endl;
+        cout << "Only one parameter in (BF | KR | KMP | BM | Automata)" << endl;
     }
     
     
