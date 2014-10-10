@@ -101,7 +101,6 @@ class BoyerMooreImpl : public Matcher {
                 
                 // now,  pPattern >= 0 && text[pText + pPattern] != pattern[pPattern]
                 pText += max(goodSuffixShift[pPattern], badCharShift[text[pText + pPattern]] - ((int)pattern.size()-1 - pPattern)); 
-                // cout << pText << " " << pPattern << " "<< pattern[pPattern] << endl;
             }
 
             return NOT_FOUND;
@@ -110,12 +109,4 @@ class BoyerMooreImpl : public Matcher {
         virtual ~BoyerMooreImpl() {
         }
 };
-/*
-int main() {
-    BoyerMooreImpl impl("CGTCTCTC");
-
-    cout << impl.find("CGTAGCGTCTCTCATATGTCATGC") << endl;
-    return 0;
-}
-*/
 
