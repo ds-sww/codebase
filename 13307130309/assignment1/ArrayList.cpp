@@ -25,14 +25,13 @@ class ArrayList: public List<T>
 {
 	private:
   		int n;
+		int million;
 		int cnt; 
-		int time;
-		int er[30];
 		T *a;
 		void repose()
 		{
 			T *b;
-			b=new T[er[time]];
+			b=new T[million*10000];
 			int i;
 			for(i=0;i<n;i++)
 				b[i]=a[i];
@@ -81,90 +80,104 @@ class ArrayList: public List<T>
 		{
 			n=0;
 			cnt=0;
-			a=new T[16];
-			time=4;	
-			int i=1;
-			er[0]=1;
-           		for(i=1;i<29;i++)
-                		er[i]=er[i-1]*2;
+			million=1;
+			a=new T[million*10000];	
 		}
 		ArrayList(const ArrayList <T> &x)
 		{
 			n=x.n;
-			time=x.time;
-			a=new T[er[x.time]];
+			million=x.million;
+			a=new T[million*10000];
 			int i;
 			cnt=0;
 			for(i=0;i<n;i++)
 				a[i]=x[i];
-			er[0]=1;
-           		for(i=1;i<29;i++)
-                		er[i]=er[i-1]*2;
 		}
 		ArrayList <T> & operator = (const ArrayList <T> &x)
 		{
-			if(a!=x.a)
-			{
-				delete[] a;	
-				a= new T[er[x.time]];
-				n=x.n;
-				cnt++;
-				time=x.time;
-				int i;
-       				for(i=0;i<n;i++)
-					a[i]=x.a[i];
-			}
+			delete[] a;
+			a= new T[x.million*10000];
+			n=x.n;
+			cnt++;
+			million=x.million;
+			int i;
+        	for(i=0;i<n;i++)
+				a[i]=x.a[i];
 			return *this;
 		}
 		~ArrayList()
 		{
 			delete[] a;
 			n=0;
+			million=1;
 		}
 		int size() const
-	        {
+        {
 			return n;
 		}
-	        bool isEmpty() const	
-	        {
-       		 	if(n==0)
-		        	return 1;
-        		return 0;
-        	}
-        	T get(int index) const
-        	{
-        		return a[index];
-        	}
-        	void add(T element)
-        	{
-        		n++;
-       			cnt++;
-        		if(n>=er[time])
-       	 		{
-        			time++;
-	        		this->repose();
-	        	}
-	        	a[n-1]=element;
-        	}
-	        T remove(int index)
-       	 	{
-        		int i;
+        bool isEmpty() const
+        {
+        	if(n==0)
+	        	return 1;
+        	return 0;
+        }
+        T get(int index) const
+        {
+        	return a[index];
+        }
+        void add(T element)
+        {
+        	n++;
 			cnt++;
-   			T o=a[index];
-        		for(i=index;i<n;i++)
-        		{
-        			a[i]=a[i+1];
-        		}
-        		n--;
-        		if(n<er[time-1]&&time>4)
-        		{
-				time--;
-				this->repose();
-        		}
-        		return o;
-       	 	}
-        	Iterator<T>* iterator()
+        	if(n>=million*10000)
         	{
-        		return new AL_Iterator<T>(this);
+        		million++;
+	        	this->repose();
+	        }
+	        a[n-1]=element;
+        }
+        T remove(int index)
+        {
+        	int i;
+			cnt++;
+			T o=a[index];
+        	for(i=index;i<n;i++)
+        	{
+        		a[i]=a[i+1];
         	}
+        	n--;
+        	if(n<(million-1)*10000)
+        	{
+				million--;
+				this->repose();
+        	}
+        	return o;
+        }
+        Iterator<T>* iterator()
+        {
+        	return new AL_Iterator<T>(this);
+        }
 };
+/*
+int main()
+{
+	ArrayList<int> R,S;
+
+	int i,j;
+	
+	for(i=0;i<100;i++)
+	{
+		R.add(i);
+	}
+	S=R;
+	Iterator<int>* iter = R.iterator();
+	i=0;
+    while (iter->hasNext()) {
+        if(R.get(i++) == iter->next())
+        printf("WIN WIN WIN!");
+    }
+	
+    printf("%d %d %d %d %d\n",S.get(0),S.get(1),S.get(2),S.get(3),S.isEmpty()); 
+	return 0;
+*/
+}*/
