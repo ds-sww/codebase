@@ -1,8 +1,5 @@
-/**
- * @author whimsycwd
- * @date   2014.10.2
- * bad character shift 和 good suffix shift 都是偏移的必要条件
- */
+//  Created by forward on 10/12/14.
+ 
 
 #include <string>
 #include <algorithm>
@@ -21,11 +18,11 @@ class BoyerMooreImpl : public Matcher {
 
     public :
 
-        BoyerMooreImpl(string pattern) {
-
+        explicit BoyerMooreImpl(const string &pattern) {
+            this->pattern = pattern;
         }
 
-        virtual int find(string text) {
+        virtual int find(const string &text) {
 
             return NOT_FOUND;
         }

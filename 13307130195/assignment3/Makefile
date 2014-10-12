@@ -1,27 +1,31 @@
-
-all : compile 
-
 compile :
 	g++ MatcherTest.cpp -o Main
 
 genData :
 	./Main genData
 
-allImpl : BF KR KMP BM
+pre: compile genData
 
-BF :
+BF : pre
 	./Main BF
 
-KR :
+KR : pre
 	./Main KR
 
-KMP :
+KMP : pre
 	./Main KMP
 
-BM :
+BM : pre
 	./Main BM
 
-Automata : 
+Automata : pre
+	./Main Automata
+
+all : pre
+	./Main BF
+	./Main KR
+	./Main KMP
+	./Main BM
 	./Main Automata
 
 clean :

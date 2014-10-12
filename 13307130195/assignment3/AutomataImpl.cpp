@@ -38,7 +38,7 @@ class AutomataImpl : public Matcher {
             
         }
     public :
-        AutomataImpl(string pattern) {
+        explicit AutomataImpl(const string &pattern) {
             this->pattern = pattern;
             state = new int[pattern.size()][CHAR_NUMBER];
             
@@ -48,7 +48,7 @@ class AutomataImpl : public Matcher {
             preprocess();
         }
 
-        virtual int find(string text) {
+        virtual int find(const string &text) {
             if (text.size() < pattern.size()) {
                 return NOT_FOUND;
             }
