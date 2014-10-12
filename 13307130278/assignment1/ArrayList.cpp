@@ -1,7 +1,7 @@
 
 /**
- * @author whimsycwd
- * @date   2014.9.26
+ * @author liliang
+ * @date   2014.9.29
  * 类似Vector
  */
 #include <iostream>
