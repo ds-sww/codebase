@@ -236,7 +236,7 @@ void genData() {
 
     //a way to kill BM
     text_len = 20000000;
-    repeat_time = 1;
+    repeat_time = 2;
     text.clear();
     for(int i = 0; i < text_len; i++)
     {
