@@ -12,7 +12,7 @@ class Iterator {
         /**
         * Return true if the iteration has more elements
         */
-        virtual bool hasNext() = 0;
+        virtual bool hasNext() const = 0;
         /**
         *  Returns the next element in the iteration
         */
