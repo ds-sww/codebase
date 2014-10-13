@@ -19,6 +19,9 @@
 *.i*86
 *.x86_64
 *.hex
+*.exe
+a.out
+*.app
 
 # Shared objects (inc. Windows DLLs)
 *.dll
@@ -33,3 +36,6 @@
 Session.vim
 .netrwhist
 *~
+
+# other
+.DS_Store
