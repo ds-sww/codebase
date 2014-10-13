@@ -1,5 +1,5 @@
 /**
- * @author whimsycwd
+ * @author qzane
  * @date   2014.10.2
  * bad character shift 和 good suffix shift 都是偏移的必要条件
  */
