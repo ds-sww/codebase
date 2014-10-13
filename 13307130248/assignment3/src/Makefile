@@ -12,7 +12,7 @@ allImpl : BF KR KMP BM
 BF : compile
 	./Main BF
 
-KR :
+KR : compile
 	./Main KR
 
 KMP :
