@@ -9,7 +9,7 @@ genData :
 
 allImpl : BF KR KMP BM
 
-BF :
+BF : compile
 	./Main BF
 
 KR :
