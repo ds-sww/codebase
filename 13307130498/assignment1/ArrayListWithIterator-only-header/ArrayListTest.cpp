@@ -111,7 +111,6 @@ void iterate_through_list(List<int>& list) {
     }
 
     Iterator<int>* iter = list.iterator();
-    
     int cnt = 0;
     while (iter->hasNext()) {
         assert(list.get(cnt++) == iter->next());
