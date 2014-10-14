@@ -213,7 +213,7 @@ void genData() {
     fprintf(fp, "%s %s %d\n", pattern.c_str(), text.c_str(), text_len * repeat_time);
     
     
-    text_len = 100;
+    text_len = 1000;
     repeat_time = 10000;
     text = gen_string(text_len);
     pattern = text + "z";
