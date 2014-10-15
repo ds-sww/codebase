@@ -1,3 +1,8 @@
+/**
+ * @author whimsycwd
+ * @date   2014.10.1
+ *
+ */
 
 #include <iostream>
 #include <cstdio>
