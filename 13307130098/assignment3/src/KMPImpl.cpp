@@ -1,28 +1,49 @@
 /**
- * @author whimsycwd
- * @date 2014.10.1
+ * @author sunqinzheng
+ * @date 2014.10.15
  */
 
 
-#include<string>
-#include<vector>
+#include "KMPImpl.h"
 
-#include "Matcher.h"
-
-using namespace std;
-
-class KMPImpl : public Matcher {
-    private : 
-        string pattern;
-
-    public :
-        KMPImpl(string pattern) {
+KMPImpl::KMPImpl(string p)
+{
+    pattern = p;
+    prev.resize(pattern.length());
+    prev[0] = -1;
+    for(int i = 1, j = -1; i < p.length(); i++)
+    {
+        while(p[i] != p[j + 1] && j != -1)
+        {
+            j = prev[j];
         }
-
-        virtual int find(string text) {
-            return NOT_FOUND; 
+        if(p[i] == p[j + 1])
+        {
+            j++;
         }
+        prev[i] = j;
+    }
+}
 
-        virtual ~KMPImpl() {
+int KMPImpl::find(string text)
+{
+    for(int i = 0, j = -1; i < text.length(); i++)
+    {
+        while(text[i] != pattern[j + 1] && j != -1)
+        {
+            j = prev[j];
         }
-};
+        if(text[i] == pattern[j + 1])
+        {
+            j++;
+        }
+        if(j == pattern.length() - 1)
+        {
+            return i - j;
+        }
+    }
+    return NOT_FOUND; 
+}
+
+KMPImpl::~KMPImpl() {}
+

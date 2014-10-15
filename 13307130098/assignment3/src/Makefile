@@ -2,7 +2,7 @@
 all : compile 
 
 compile :
-	g++ MatcherTest.cpp -o Main
+	g++ -O2 MatcherTest.cpp BruteForceImpl.cpp KarpRabinImpl.cpp KMPImpl.cpp BoyerMooreImpl.cpp -o Main
 
 genData :
 	./Main genData
@@ -20,6 +20,9 @@ KMP :
 
 BM :
 	./Main BM
+
+DBG :
+	g++ -g MatcherTest.cpp BruteForceImpl.cpp KarpRabinImpl.cpp KMPImpl.cpp BoyerMooreImpl.cpp -o Main
 
 Automata : 
 	./Main Automata
