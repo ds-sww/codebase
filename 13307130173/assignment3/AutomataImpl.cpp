@@ -1,10 +1,3 @@
-/**
- * @author whimsycwd
- * @date   2014.10.8
- *
- * help to understand KMP
- */
-
 #include<string>
 #include<vector>
 #include<iostream>
