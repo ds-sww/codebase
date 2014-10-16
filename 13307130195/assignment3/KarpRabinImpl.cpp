@@ -59,6 +59,7 @@ class KarpRabinImpl : public Matcher {
         }
 
         virtual ~KarpRabinImpl() {
+            delete[] pow_n;
         }
 };
 
