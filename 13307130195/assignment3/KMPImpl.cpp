@@ -21,7 +21,7 @@ class KMPImpl : public Matcher {
             computeLPS();
         }
 
-        void computeLPS()
+        void computeLPS() //Longest Prefix and Suffix match
         {
             int k = -1;
             lps[0] = -1;
@@ -49,5 +49,6 @@ class KMPImpl : public Matcher {
         }
 
         virtual ~KMPImpl() {
+            delete[] lps;
         }
 };
