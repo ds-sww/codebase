@@ -1,20 +1,31 @@
-
 #include <string>
 #include <algorithm>
 #include <vector>
 #include <iostream>
-
 #include "Matcher.h"
 #define maxalpha 256
 using namespace std;
-
-
 class BoyerMooreImpl : public Matcher {
     
     private :
         string pattern;       
-        int bc[maxalpha],*gs;
-
+        int bc[maxalpha],*gs,*suff;
+        void makesuffix(string s,int len)
+        {
+            suff[len-1]=len;
+            int r;
+            int l=len-1;
+            for (int i=len-2;i>=0;i--)
+            {
+                if (i>l && suff[i+len-1-r]<=i-l) suff[i]=suff[i+len-1-r];
+                    else {
+                            if (i<l) l=i;
+                            r=i;
+                            while (l>=0 && s[l]==s[l+len-1-r]) l--;
+                            suff[i]=r-l;
+                         }
+            }
+        }
         void makebadchar(string s,int len)
         {
             for (int i=0;i<maxalpha;i++) bc[i]=len;
@@ -37,19 +48,15 @@ class BoyerMooreImpl : public Matcher {
             int lastprefix=1;
             for (int i=len-2;i>=0;i--)
             {
-                if (isprefix(s,len,i+1)) lastprefix=i+1; //p not match
+//                if (isprefix(s,len,i+1)) lastprefix=i+1; //p not match
+                if (suff[len-2-i]==len-1-i) lastprefix=i+1;
                 gs[i]=lastprefix+len-1-i;
-                // i..i+len-1-j   j..len-1   i+len-1-j+lastprefix
             }
-            //case 2    i not match [lastprefix..len-1]=[0..len-1-lastprefix];
             for (int i=1;i<len-1;i++)
             {
-                int tlen=suffixsame(s,i,len);
+                int tlen=suff[i];
                 if (tlen>0 && s[i-tlen]!=s[len-1-tlen]) gs[len-1-tlen]=len-1-i+tlen;
             }   
-            //len-1-(i-tlen)  len-1-(len-1-tlen)  len-1-i+i'+len-1-j   j=len-1-tlen;
-            //case 1    i not match [i-tlen+1..i]=[len-tlen..len-1]
-            //   yt    xt    so the position of x must be <len-1 & >0 in order to make room for y;
         }
         int bm(string T,int Tlen,string P,int Plen)
         {
@@ -59,16 +66,6 @@ class BoyerMooreImpl : public Matcher {
                     for (j=Plen-1;j>=0 && P[j]==T[i];i--,j--);
                     if (j<0) return i+1;
             }
-            //   for example
-            //...............xbbad   Text
-            //       tqxbbadtybbad   Pattern
-            //             tqxbbadtybbad
-            //               j   Plen-1
-            //         bc[T[i]]
-            //  i+Plen-1-j+   steps to move
-            //steps to move=  the nearest two "x"s the distance is
-            //  bc[T[i]]-(Plen-1-j)
-            //so the updated position of i is i+Plen-1-j+bc[T[i]]-(Plen-1-j)=i+bc[T[i]];   and the updated initial position of j should be Plen-1   from right to left;
             return -1;
         }    
 
@@ -77,6 +74,8 @@ class BoyerMooreImpl : public Matcher {
         BoyerMooreImpl(string pattern) {
             this->pattern=pattern;
             gs=new int[pattern.size()];
+            suff=new int [pattern.size()];
+            makesuffix(pattern,pattern.size());
             makebadchar(pattern,pattern.size());
             makegoodsuffix(pattern,pattern.size());
 
@@ -88,6 +87,7 @@ class BoyerMooreImpl : public Matcher {
        
         virtual ~BoyerMooreImpl() {
             delete[]gs;
+            delete[]suff;
         }
 };
 
