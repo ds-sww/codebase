@@ -31,24 +31,12 @@ class BoyerMooreImpl : public Matcher {
             for (int i=0;i<maxalpha;i++) bc[i]=len;
             for (int i=0;i<len-1;i++) bc[s[i]]=len-i-1;
         }
-        int suffixsame(string s,int pos,int len)
-        {
-            int i;
-            for (i=0;i<pos && s[len-1-i]==s[pos-i];i++);
-            return i;
-        }
-        int isprefix(string s,int len,int pos)
-        {
-            for (int i=0;i<len-pos;i++) if (s[i]!=s[pos+i]) return 0;
-            return 1;
-        }
         void makegoodsuffix(string s,int len)
         {
-            gs[len-1]=1; //end of string no prefix=suffix of t xt x doesn't match string should move len right
+            gs[len-1]=1; 
             int lastprefix=1;
             for (int i=len-2;i>=0;i--)
             {
-//                if (isprefix(s,len,i+1)) lastprefix=i+1; //p not match
                 if (suff[len-2-i]==len-1-i) lastprefix=i+1;
                 gs[i]=lastprefix+len-1-i;
             }
