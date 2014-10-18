@@ -48,7 +48,7 @@ class AutomataImpl : public Matcher {
             preprocess();
         }
 
-        virtual int find(string text) {
+        virtual int find(string& text) {
             if (text.size() < pattern.size()) {
                 return NOT_FOUND;
             }
