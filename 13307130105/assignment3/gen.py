@@ -44,7 +44,7 @@ if __name__ == '__main__':
 	print Thue_Morse_Sequence(4096, 'a'), Thue_Morse_Sequence(4096, 'b'), -1
 
 	# brand new birthday gifts for those who are too lazy to compare their strings
-	for i in [256,307,127,137,233,27,26,2,999983]:
+	for i in [256,307,127,137,233,27,26,2,999983,2007]:
 		print >>sys.stderr, 'collision %d' % i
 		a, b = Meaningless_Collision(int(1e9)+7, i, 9)
 		print a, b, -1
