@@ -29,9 +29,8 @@ class Matcher {
     
     public :
         const static int NOT_FOUND = -1;
-        virtual int find(std::string pattern) = 0;
-        virtual ~Matcher() {
-        }
+        virtual int find(const std::string& pattern) const = 0;
+        virtual ~Matcher() {}
 };
 
 #endif
