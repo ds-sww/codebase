@@ -20,9 +20,20 @@ class BruteForceImpl : public Matcher {
 
     public :
         explicit BruteForceImpl(const string& pattern) {
+            this->pattern = pattern;
         }
 
-        virtual int find(string text) {
+        virtual int find(string &text) {
+            int pattern_len = pattern.length();
+            int text_len = text.length();
+            int cur = 0;
+            while (cur < text_len - pattern_len + 1)
+            {
+                int s=cur,t=0;
+                while(text[s]==pattern[t] && t<pattern_len ) { s++; t++;}
+                if (t == pattern_len) return cur;  
+                cur++;              
+            }
             return NOT_FOUND;
         }
         
