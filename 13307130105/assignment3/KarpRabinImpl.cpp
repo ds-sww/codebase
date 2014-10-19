@@ -13,12 +13,12 @@
 
 using namespace std;
 
-const int MODULO[] = {(int)1e9 + 7, (int)1e9 + 9};
-const int MODULO_COUNT = sizeof(MODULO) / sizeof(MODULO[0]);
-
 class KarpRabinImpl : public Matcher
 {
 private:
+	const static int MODULO[2];
+	const static int MODULO_COUNT = 2;
+
 	string pattern;
 	int SEED;
 	int hashes[MODULO_COUNT];
@@ -82,3 +82,7 @@ public:
 
 	}
 };
+
+// Seriously, why do you think "#include <blahblah.cpp>" is a good idea?!
+// and everything is inlined, leaves our constants forever alone.
+const int KarpRabinImpl::MODULO[2] = {(int)1e9 + 7, (int)1e9 + 9};

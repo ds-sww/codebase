@@ -5,7 +5,7 @@ compile :
 	g++ MatcherTest.cpp -o Main
 
 genData :
-	./Main genData
+	python gen.py
 
 allImpl : BF KR KMP BM
 

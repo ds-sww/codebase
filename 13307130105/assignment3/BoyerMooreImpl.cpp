@@ -12,11 +12,10 @@
 
 using namespace std;
 
-const int ALPHABET_SIZE = 256;
-
 class BoyerMooreImpl : public Matcher
 {
 private:
+	const static int ALPHABET_SIZE = 256;
 	string pattern;
 	int badCharShifty[ALPHABET_SIZE];
 	int* goodSuffixShifty;
