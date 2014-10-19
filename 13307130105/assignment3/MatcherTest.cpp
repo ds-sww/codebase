@@ -12,10 +12,10 @@
 #include "Matcher.h"
 #include <fstream>
 
-#include "BruteForceImpl.cpp"
-#include "KarpRabinImpl.cpp"
-#include "KMPImpl.cpp"
-#include "BoyerMooreImpl.cpp"
+#include "BruteForceImpl.h"
+#include "KarpRabinImpl.h"
+#include "KMPImpl.h"
+#include "BoyerMooreImpl.h"
 
 using namespace std;
 
@@ -56,6 +56,13 @@ Matcher * getImpl(const string& pattern) {
 
 void find(string text, string pattern, int expect) {
     Matcher * impl = getImpl(pattern);
+
+    printf("Running test case (text.length() = %d, pattern.length() = %d)...\n", text.length(), pattern.length());
+    if(type == 1 && (text.length() > 100000 || pattern.length() > 100000))
+    {
+        puts("Too long for brute force, skipped.");
+        return;
+    }
     
     clock_t start_time = clock();
     int pos = impl->find(text);
@@ -68,10 +75,6 @@ void find(string text, string pattern, int expect) {
    // cout << pattern.size() << endl;
     string out_text = (text.size() <= 100) ? text : "Too Long";
     string out_pattern =(pattern.size() <= 100) ? pattern : "Too Long";
-
-    
-    printf("start time : %lu\n", start_time);
-    printf("end   time : %lu\n", end_time);
 
     printf("text          : %s\npattern       : %s\nmatch positon : %d\nexecution time: %lfs\n\n", 
             out_text.c_str(), out_pattern.c_str() , pos, ((double) end_time - start_time) / CLOCKS_PER_SEC);
