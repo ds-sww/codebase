@@ -3,49 +3,38 @@
 * @date 2014.10.20
 */
 
-#include <string>
-#include "Matcher.h"
+#include "KMPImpl.h"
 
-using namespace std;
-
-class KMPImpl : public Matcher
+KMPImpl::~KMPImpl()
 {
-private:
-	string pattern;
-	int* knext;
+	if(knext) delete[] knext;
+}
 
-public:
-	KMPImpl(const string& pattern)
+int KMPImpl::find( const string& text ) const
+{
+	if(pattern.length() == 0) return 0;
+	int matched = 0;
+	for(int i = 0;i < text.length();i++)
 	{
-		this->pattern = pattern;
-
-		knext = new int[pattern.length()];
-
-		int cur = 0;
-		knext[0] = 0;
-		for(int i = 1;i < pattern.length();i++)
-		{
-			while(cur && pattern[i] != pattern[cur]) cur = knext[cur-1];
-			if(pattern[i] == pattern[cur]) cur++;
-			knext[i] = cur;
-		}
+		while(matched && text[i] != pattern[matched]) matched = knext[matched-1];
+		if(text[i] == pattern[matched]) matched++;
+		if(matched == pattern.length()) return i-pattern.length()+1;
 	}
+	return NOT_FOUND;
+}
 
-	virtual int find(const string& text) const
+KMPImpl::KMPImpl( const string& pattern )
+{
+	this->pattern = pattern;
+
+	knext = new int[pattern.length()];
+
+	int cur = 0;
+	knext[0] = 0;
+	for(int i = 1;i < pattern.length();i++)
 	{
-		if(pattern.length() == 0) return 0;
-		int matched = 0;
-		for(int i = 0;i < text.length();i++)
-		{
-			while(matched && text[i] != pattern[matched]) matched = knext[matched-1];
-			if(text[i] == pattern[matched]) matched++;
-			if(matched == pattern.length()) return i-pattern.length()+1;
-		}
-		return NOT_FOUND;
+		while(cur && pattern[i] != pattern[cur]) cur = knext[cur-1];
+		if(pattern[i] == pattern[cur]) cur++;
+		knext[i] = cur;
 	}
-
-	virtual ~KMPImpl()
-	{
-		if(knext) delete[] knext;
-	}
-};
+}
