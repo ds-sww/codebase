@@ -21,8 +21,5 @@ KMP :
 BM :
 	./Main BM
 
-Automata : 
-	./Main Automata
-
 clean :
 	rm -rf Main genData.txt
