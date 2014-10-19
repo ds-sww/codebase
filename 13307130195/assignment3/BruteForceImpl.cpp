@@ -1,8 +1,4 @@
-/**
- * @author whimsycwd
- * @date   2014.10.1
- *
- */
+//  Created by forward on 10/12/14.
 
 #include <iostream>
 #include <cstdio>
@@ -20,9 +16,22 @@ class BruteForceImpl : public Matcher {
 
     public :
         explicit BruteForceImpl(const string& pattern) {
+            this->pattern = pattern;
         }
 
-        virtual int find(string text) {
+        virtual int find(const string &text) {
+            bool match;
+            for (int i = 0; i <= text.length() - pattern.length(); i++)
+            {
+                match = true;
+                for (int j = 0; j < pattern.length(); j++)
+                if (text[i+j] != pattern[j]) 
+                {
+                    match = false;
+                    break;
+                }
+                if (match) return i;
+            }
             return NOT_FOUND;
         }
         

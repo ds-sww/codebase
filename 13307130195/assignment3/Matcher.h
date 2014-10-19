@@ -7,7 +7,7 @@
 #ifndef MATCHER_H
 #define MATCHER_H 1
 
-#include<string>
+#include <string>
 
 /**
  * The main purpose of this form is simplify test.
@@ -29,7 +29,7 @@ class Matcher {
     
     public :
         const static int NOT_FOUND = -1;
-        virtual int find(std::string pattern) = 0;
+        virtual int find(const std::string &pattern) = 0;
         virtual ~Matcher() {
         }
 };
