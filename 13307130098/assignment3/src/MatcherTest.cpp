@@ -11,10 +11,10 @@
 #include "Matcher.h"
 #include <fstream>
 
-#include "BruteForceImpl.cpp"
-#include "KarpRabinImpl.cpp"
-#include "KMPImpl.cpp"
-#include "BoyerMooreImpl.cpp"
+#include "BruteForceImpl.h"
+#include "KarpRabinImpl.h"
+#include "KMPImpl.h"
+#include "BoyerMooreImpl.h"
 #include "AutomataImpl.cpp"
 
 using namespace std;

@@ -1,35 +1,27 @@
 /**
- * @author whimsycwd
- * @date   2014.10.1
+ * @author sunqinzheng
+ * @date   2014.10.13
  *
  */
+#include "BruteForceImpl.h"
 
-#include <iostream>
-#include <cstdio>
-#include <cstring>
+BruteForceImpl::BruteForceImpl(const string& p) 
+{
+    pattern = p;
+}
 
-#include "Matcher.h"
-
-using namespace std;
-
-class BruteForceImpl : public Matcher {
-    
-    private :
-        string pattern;
-
-
-    public :
-        explicit BruteForceImpl(const string& pattern) {
+int BruteForceImpl::find(string text) {
+    for(int i = 0; i <= text.length() - pattern.length(); i++)
+    {
+        if(pattern == text.substr(i, pattern.length()))
+        {
+            return i;
         }
-
-        virtual int find(string text) {
-            return NOT_FOUND;
-        }
+    }
+    return NOT_FOUND;
+}
         
-        virtual ~BruteForceImpl() {
-            
-        }
-};
+BruteForceImpl::~BruteForceImpl(){}
 
 
 

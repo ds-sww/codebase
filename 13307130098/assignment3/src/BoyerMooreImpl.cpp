@@ -1,36 +1,72 @@
 /**
- * @author whimsycwd
- * @date   2014.10.2
- * bad character shift 和 good suffix shift 都是偏移的必要条件
+ * @author sunqinzheng
+ * @date   2014.10.15
  */
 
-#include <string>
-#include <algorithm>
-#include <vector>
-#include <iostream>
+#include "BoyerMooreImpl.h"
 
-#include "Matcher.h"
-
-using namespace std;
-
-
-class BoyerMooreImpl : public Matcher {
-    
-    private :
-        string pattern;
-
-    public :
-
-        BoyerMooreImpl(string pattern) {
-
+BoyerMooreImpl::BoyerMooreImpl(string p)
+{
+    pattern = p;
+    bc.assign(256, p.length());
+    gs.assign(p.length(), p.length());
+    suffix.resize(p.length());
+    //bad character
+    for(int i = 0; i < p.length(); i++)
+    {
+        bc[p[i]] = i;
+    }
+    //suffix
+    for(int i = 0; i < p.length(); i++)
+    {
+        for(int j = 0; j <= i; j++)
+        {
+            if(p[i - j] == p[p.length() - 1 - j])
+            {
+                suffix[i]++;
+            }
+            else break;
         }
-
-        virtual int find(string text) {
-
-            return NOT_FOUND;
+    }
+    //good suffix
+    for(int i = p.length() - 1, j = 0; i >= 0; i--)
+    {
+        if(suffix[i] == i + 1)
+        {
+            for(; j < p.length() - 1 - i; j++)
+            {
+                gs[j] = p.length() - 1 - i;
+            }
         }
-
-        virtual ~BoyerMooreImpl() {
+    }
+    for(int i = 0; i < p.length() - 1; i++)
+    {
+        gs[p.length() - 1 - suffix[i]] = p.length() - 1 - i;
+    }
+}
+       
+int BoyerMooreImpl::find(string text)
+{
+    int j = 0;
+    while(j <= text.length() - pattern.length())
+    {
+        int i = pattern.length() - 1;
+        while(pattern[i] == text[j + i] && j >= 0)
+        {
+            i--;
         }
-};
+        if(i < 0)
+        {
+            return j;
+        }
+        else 
+        {
+            j += max(gs[i], i - bc[text[i + j]]);
+        }
+    }
+    return NOT_FOUND;
+}
+
+BoyerMooreImpl::~BoyerMooreImpl() {}
+
 
