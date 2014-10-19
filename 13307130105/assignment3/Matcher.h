@@ -22,7 +22,7 @@
  * XImpl xImpl = new XImpl(pattern);
  * xImpl.find(text) should return 2 (start from 0, return the first matched substring index)
  *
- * more usuage detail in MatcherTest.
+ * more usage details in MatcherTest.
  *
  */
 class Matcher {
