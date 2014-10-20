@@ -18,16 +18,12 @@ class BoyerMooreImpl : public Matcher {
     
     private :
         string pattern;
-
+        int *shift1,*shift2;
     public :
 
-        BoyerMooreImpl(string pattern) {
-            this->pattern=pattern;
-        }
-        
         int MAX(int a,int b) {if (a>b) return a; else return b;} 
 
-        void suffixes(string &pattern,int *suff){
+        void suffixes(string pattern,int *suff){
             int m=pattern.size();
             int f,g;
             suff [m-1]=m;
@@ -45,9 +41,9 @@ class BoyerMooreImpl : public Matcher {
                 }
         }    // suff record the max suffix of pattern and pattern before i
 
-        void preBMGs(string &pattern,int *shift2) {
+        void preBMGs(string pattern,int *shift2) {
             int m=pattern.size();
-            int *suff=new int [m];
+            int *suff=new int [m+100];
             int j=0;
             suffixes(pattern,suff);
             for (int i=0;i<m; i++)
@@ -64,20 +60,24 @@ class BoyerMooreImpl : public Matcher {
                 shift2[m-1-suff[i]]=m-1-i;
         }
 
-        virtual int find(string text) {
-            int len1=text.size();
+        BoyerMooreImpl(string pattern) {
+            this->pattern=pattern;
             int len2=pattern.size();
-            if (len1<len2) return NOT_FOUND;
-            
-            int Asize=256;
-            int shift1[Asize];
-            int *shift2=new int [len2];
-            for (int i=0; i<Asize; i++)
+            shift1=new int [300];
+            shift2=new int [len2+100];
+            for (int i=0; i<256; i++)
                 shift1[i]=len2;
             for (int i=0; i<len2-1; i++)
                 shift1[pattern[i]]=len2-i-1;// bad character
 
             preBMGs(pattern,shift2);// good suffix
+        }
+
+        virtual int find(string text) {
+            int len1=text.size();
+            int len2=pattern.size();
+            if (len1<len2) return NOT_FOUND;
+            
 
             int i,j=0;
             while (j<=len1-len2)
@@ -91,6 +91,8 @@ class BoyerMooreImpl : public Matcher {
         }
 
         virtual ~BoyerMooreImpl() {
+            delete [] shift1;
+            delete [] shift2;
         }
 };
 
