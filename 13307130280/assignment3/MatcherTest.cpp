@@ -195,7 +195,7 @@ void genData() {
    
      
 
-    text_len = 100;
+    text_len = 1000;
     repeat_time = 10000;
     text = gen_string(text_len);
     pattern = text + "z";
@@ -204,7 +204,7 @@ void genData() {
     fprintf(fp, "%s %s %d\n", pattern.c_str(), text.c_str(), text_len * repeat_time);
 
     
-    text_len = 100;
+    text_len = 1000;
     repeat_time = 10000;
     text = gen_string(text_len);
     pattern = text + "z";
@@ -212,8 +212,7 @@ void genData() {
     text = text + pattern + text;
     fprintf(fp, "%s %s %d\n", pattern.c_str(), text.c_str(), text_len * repeat_time);
     
-    
-    text_len = 100;
+    text_len = 1000;
     repeat_time = 10000;
     text = gen_string(text_len);
     pattern = text + "z";
@@ -222,6 +221,17 @@ void genData() {
     pattern += "z";
     fprintf(fp, "%s %s %d\n", pattern.c_str(), text.c_str(), Matcher::NOT_FOUND);
 
+	//new
+
+    text_len=2;
+    repeat_time=1000000;
+    text=gen_string(text_len);
+    pattern=text;
+    pattern=repeat(pattern,10000);
+    pattern=pattern+"z";
+    text=repeat(text,repeat_time);
+    fprintf(fp,"%s %s %d\n",pattern.c_str(),text.c_str(),Matcher::NOT_FOUND);
+    
     fclose(fp);
 
 }
