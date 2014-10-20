@@ -22,16 +22,15 @@
  * XImpl xImpl = new XImpl(pattern);
  * xImpl.find(text) should return 2 (start from 0, return the first matched substring index)
  *
- * more usuage detail in MatcherTest.
+ * more usage details in MatcherTest.
  *
  */
 class Matcher {
     
     public :
         const static int NOT_FOUND = -1;
-        virtual int find(std::string pattern) = 0;
-        virtual ~Matcher() {
-        }
+        virtual int find(const std::string& pattern) const = 0;
+        virtual ~Matcher() {}
 };
 
 #endif

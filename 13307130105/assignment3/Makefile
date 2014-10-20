@@ -2,27 +2,24 @@
 all : compile 
 
 compile :
-	g++ MatcherTest.cpp -o Main
+	g++ -O2 -march=native -o tester MatcherTest.cpp BoyerMooreImpl.cpp KarpRabinImpl.cpp KMPImpl.cpp
 
 genData :
-	./Main genData
+	./tester genData; python gen.py >> genData.txt
 
 allImpl : BF KR KMP BM
 
 BF :
-	./Main BF
+	./tester BF
 
 KR :
-	./Main KR
+	./tester KR
 
 KMP :
-	./Main KMP
+	./tester KMP
 
 BM :
-	./Main BM
-
-Automata : 
-	./Main Automata
+	./tester BM
 
 clean :
-	rm -rf Main genData.txt
+	rm -rf tester genData.txt
