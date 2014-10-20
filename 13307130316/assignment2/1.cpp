@@ -19,6 +19,8 @@ class point
 		}
 		bool check() const
 		{
+            if(x < 0 || y < 0)
+                return 0;
 			if(map[x][y] == '*' || map[x][y] == 'K' || (map[x][y] == 'D' && key))
 				return 1;
 			else
@@ -44,7 +46,7 @@ int bfs(point start, point end)
 		{
 			point next = now;
 			next.x += vect[0][i]; next.y += vect[1][i];
-			if(ans[next.x][next.y][next.key]<=0 && next.check())
+			if(next.check() && ans[next.x][next.y][next.key]<=0)
 			{
 				if(map[next.x][next.y] == 'K')
 					next.key = 1;
