@@ -33,4 +33,3 @@ class BoyerMooreImpl : public Matcher {
         virtual ~BoyerMooreImpl() {
         }
 };
-

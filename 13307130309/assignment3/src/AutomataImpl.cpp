@@ -68,4 +68,3 @@ class AutomataImpl : public Matcher {
             delete [] state;
         }
 };
-
