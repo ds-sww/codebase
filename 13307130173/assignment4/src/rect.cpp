@@ -49,7 +49,6 @@ int main()
        for (int i=0;i<n;i++)
        {
            res=(long long)(r[i]-l[i]+1)*a[i];
-//           cout<<l[i]<<" "<<r[i]<<" ";
            if (res>ans) ans=res;
        }       
        cout<<ans<<"\n";
