@@ -3,7 +3,7 @@
  * @date 2014.10.11
  */
 
-
+#include<iostream>
 #include<string>
 #include<vector>
 
@@ -40,6 +40,13 @@ class KMPImpl : public Matcher {
 					}
 				}
 			}
+
+		//	for (int i = 0; i < len; i++)
+		//		cout << pattern[i];
+		//	cout << endl;
+		//	for (int i = 0; i < len; i++)
+		//		cout << Next[i] << " ";
+		//	cout << endl;
 
         }
 
