@@ -21,11 +21,11 @@ class BoyerMooreImpl : public Matcher {
 
     public :
 
-        BoyerMooreImpl(string pattern) {
+        BoyerMooreImpl(const string &pattern) {
 
         }
 
-        virtual int find(string text) {
+        virtual int find(const string &text) const {
 
             return NOT_FOUND;
         }
