@@ -14,15 +14,13 @@ using namespace std;
 class KMPImpl : public Matcher {
     private : 
         string pattern;
-
+        int *next;
     public :
         KMPImpl(string pattern) {
             this->pattern=pattern;
-        }
-        int* compute_next(string pattern) {  
             int len = pattern.size()+1;  
             int j=0,i=1;  
-            int *next = new int[len];  
+            next = new int[len+1];  
             next[i] = 0;  
             while (i<len)  
             {  
@@ -34,16 +32,13 @@ class KMPImpl : public Matcher {
                 }  
                 else  j = next[j];  
             }  
-            return next;  
-        }  
+        }
 
         virtual int find(string text) {
             int len1=text.size()+1;
             int len2=pattern.size()+1;
             int i=0,j=0;
             if (len1<len2) return NOT_FOUND;
-            int *next;
-            next=compute_next(pattern);
             while (i < len1 && j < len2)  
             {  
                 if (j == 0 || text[i - 1] == pattern[j - 1])  
@@ -55,5 +50,6 @@ class KMPImpl : public Matcher {
         }
 
         virtual ~KMPImpl() {
+            delete [] next;
         }
 };
