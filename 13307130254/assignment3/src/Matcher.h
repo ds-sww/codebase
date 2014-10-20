@@ -1,8 +1,11 @@
+/*
+*	Copyright (C)	Lyq root#lyq.me
+*	File Name     : Matcher.h
+*	Creation Time : 2014/10/13 21:18:45
+*	Environment   : Ubuntu 14.04-64bit
+*	Hompage       : http://www.lyq.me
+*/
 
-/**
- * @author whimsycwd
- * @date   2014.10.1
- */
 
 #ifndef MATCHER_H
 #define MATCHER_H 1
@@ -25,13 +28,14 @@
  * more usuage detail in MatcherTest.
  *
  */
-class Matcher {
-    
-    public :
-        const static int NOT_FOUND = -1;
-        virtual int find(std::string pattern) = 0;
-        virtual ~Matcher() {
-        }
+class Matcher 
+{
+public :
+	const static int NOT_FOUND = -1;
+	virtual int find(std::string pattern) = 0;
+	virtual ~Matcher() 
+	{
+	}
 };
 
 #endif
