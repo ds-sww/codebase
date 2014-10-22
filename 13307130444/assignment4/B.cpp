@@ -1,43 +1,67 @@
-#include<iostream>
-#include<cstdio>
+#include<stack>
 #include<vector>
+#include<queue>
+#include <iostream>
 using namespace std;
 
-int N;
+class Element {  
+public: int height; // 每一个柱状条的高度（宽度为1）  
+		int index; // 每个柱状条的x坐标值，代表它们出现的相对次序  
+        Element(int height, int index) {  
+        this->height = height;  
+        this->index = index;  
+    }  
+} ; 
 
-int work()
-{
-	int n=N,temp,max=0,a=0,j=0,k=-1;
-	vector<int> v;
-	while(n--){
-		int temp;
-		scanf("%d",&temp);
-		v.push_back(temp);
-	}
-	for(int i=0;i<N;i++){
-		for(a=j=0,k=-1;j<N;j++){
-			if(v[j]>=v[i]);
-			else {
-				a=(a>(j-k-1))?a:(j-k-1);
-				k=j;
-			}
+int maxRectangleValue(int num) {  
+		int m=num,*array=new int[num];
+		vector<Element> input;  
+		for(int i=0;i<m;i++){
+			cin>>array[i];
+			Element element(array[i],i);
+			input.push_back(element);
 		}
-			if(k==-1)a=j;
-			max=(max>a*v[i])?max:a*v[i];
-	}
-	cout<<max<<endl;
-	return max;
-}
-
+		int maxValue = 0; 
+		stack<Element> stk;  
+        for (int i=0;i<m;i++) {  
+            if (stk.empty())  
+                stk.push(input[i]);  
+            else {  
+                while (input[i].height < stk.top().height) { // 出栈，并计算最大矩形大小  
+                    Element topElement = stk.top();  
+					stk.pop();
+                    int tmpValue = topElement.height * (input[i].index - topElement.index); // height * width  
+                    if (tmpValue > maxValue)  
+                        maxValue = tmpValue;  
+                    if (stk.empty())  
+                        break;  
+				}  
+                // 进栈  
+                stk.push(input[i]);
+			}  
+        }  
+		    while (!stk.empty()) { 
+			Element topElement =stk.top(); 
+			stk.pop();  
+            int tmpValue = topElement.height * ((m - 1) - topElement.index + 1); // height * width  
+            if (tmpValue > maxValue)  
+                maxValue = tmpValue;  
+        }  
+        return maxValue;  
+    }  
+      
 int main()
 {
-	while(scanf("%d", &N), N != 0) 
-	{ 
-		work(); 
-	} 
- 	return 0; 
-} 
-
-
-
+	int i;
+	queue<int> q;
+	while(cin>>i,i!=0)
+	{
+		q.push(maxRectangleValue(i));
+	}
+	while(!q.empty()){
+		cout<<q.front()<<endl;
+		q.pop();
+	}
+	return 0;getchar();getchar();
+}
 
