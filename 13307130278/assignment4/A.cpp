@@ -1,15 +1,16 @@
 #include<iostream>
 using namespace std;
 
-int a[3000],b[3000],sta[3000];
+int a[3000],sta[3000];
 int n;
+
 int solve()
 {
 	int top = 0, now = 1;
 	for (int i = 1; i <= n; i++)
 	{
-		++top; sta[top] = b[i];
-		while ( (sta[top] == a[now])&&(top))
+		++top; sta[top] = i;
+		while ((sta[top] == a[now])&&(top))
 		{
 			--top; ++now;
 		}
@@ -30,8 +31,6 @@ int main()
 	cin >> n;
 	while (n)
 	{
-		for (int i = 1; i <= n; i++)
-			b[i] = i;
 		while (true)
 		{
 			cin >> a[1];
@@ -45,3 +44,4 @@ int main()
 	}
 	return 0;
 }
+
