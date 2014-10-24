@@ -17,7 +17,7 @@ class KMPImpl : public Matcher {
         int *next;
     public :
         KMPImpl(string pattern) {
-            this->pattern=pattern;
+            this->pattern=pattern; 
             int len = pattern.size()+1;  
             int j=0,i=1;  
             next = new int[len+1];  
