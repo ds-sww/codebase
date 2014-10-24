@@ -11,8 +11,6 @@ int min1[1000100], min2[1000100];
 int max1[1000100], max2[1000100];
 int ans[1000100][2];
 
-
-
 int main()
 {
 	cin >> n >> m;
