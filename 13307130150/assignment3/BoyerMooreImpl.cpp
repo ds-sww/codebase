@@ -23,7 +23,7 @@ class BoyerMooreImpl : public Matcher {
 
         int MAX(int a,int b) {if (a>b) return a; else return b;} 
 
-        void suffixes(string &pattern,int *suff){
+        void suffixes(string pattern,int *suff){
             int m=pattern.size();
             int f,g;
             suff [m-1]=m;
@@ -41,7 +41,7 @@ class BoyerMooreImpl : public Matcher {
                 }
         }    // suff record the max suffix of pattern and pattern before i
 
-        void preBMGs(string &pattern,int *shift2) {
+        void preBMGs(string pattern,int *shift2) {
             int m=pattern.size();
             int *suff=new int [m+100];
             int j=0;
@@ -72,7 +72,6 @@ class BoyerMooreImpl : public Matcher {
 
             preBMGs(pattern,shift2);// good suffix
         }
-        
 
         virtual int find(string text) {
             int len1=text.size();
