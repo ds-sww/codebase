@@ -1,6 +1,6 @@
 /**
- * @author whimsycwd
- * @date   2014.10.1
+ * @author aixile
+ * @date   2014.10.13
  *
  */
 
@@ -19,10 +19,15 @@ class BruteForceImpl : public Matcher {
 
 
     public :
-        explicit BruteForceImpl(const string& pattern) {
+        explicit BruteForceImpl(const string& pattern):pattern(pattern) {
         }
 
         virtual int find(string text) {
+			for(int i=0;i<text.length()-pattern.length()+1;i++){
+				int j=0;
+				for(;j<pattern.length()&&text[i+j]==pattern[j];j++);
+				if(j==pattern.length())	return i;
+			}
             return NOT_FOUND;
         }
         
@@ -30,6 +35,3 @@ class BruteForceImpl : public Matcher {
             
         }
 };
-
-
-
