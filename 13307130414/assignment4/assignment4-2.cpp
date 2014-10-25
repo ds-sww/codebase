@@ -1,37 +1,49 @@
 #include <iostream>
+#include <stack>
 #include <stdio.h>
-#include <vector>
 using namespace std;
 
+struct Node {
+    int Height;
+    int StartPos;
+} node;
+
+int n;
+long long Size;
+long long Max;
+stack <Node> s;
+
 int main() {
-    vector <int> rec;
-    int Rec;
-    int n;
-    int i,j,k;
-    int num;
-    long long  Size;
-    long long Max;
-
-    while (1) {
-        cin >> n;
-        if (n == 0) break;
-        for(i = 0; i < n; i++) {
-            scanf("%d", &Rec);
-            rec.push_back(Rec);
-        }
+    while (scanf("%d",&n) && n) {
+        int i,height;
         Max = 0;
-        for (i = 0; i < n; i++) {
-            for (j = i; rec[j] >= rec[i] && j < n; j++) ;
-            for (k = i; rec[k] >= rec[i] && k >= 0; k--) ;
-            num = j-k-1;
-            Size = num * rec[i];
-            if (Size > Max)
-                Max = Size;
-        }
-        while (!rec.empty())
-            rec.pop_back();
-        cout << Max << endl;
-    }
+        node.Height = 0;
+        node.StartPos = 0;
+        s.push(node);
 
+        for (i = 1; i <= n; i++) {
+            scanf("%d", &height);
+            node.Height = height;
+            node.StartPos = i;
+
+            while (height < s.top().Height) {
+                node.StartPos = s.top().StartPos;
+                Size = (i - s.top().StartPos) * s.top().Height;
+                if (Size > Max) Max = Size;
+                s.pop();
+            }
+            if (height == s.top().Height)
+                node.StartPos = s.top().StartPos;
+            s.push(node);
+        }
+
+        while (!s.empty()) {
+            Size = (i - s.top().StartPos) * s.top().Height;
+            if (Size > Max) Max = Size;
+            s.pop();
+         }
+
+         cout << Max << endl;
+    }
     return 0;
 }
