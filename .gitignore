@@ -39,3 +39,6 @@ Session.vim
 
 # other
 .DS_Store
+
+# .........
+genData.txt

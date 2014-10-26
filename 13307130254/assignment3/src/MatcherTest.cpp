@@ -1,7 +1,11 @@
-/**
- * @author whimsycwd
- * @date   2014.10.1
- */
+/*
+*	Copyright (C)	Lyq root#lyq.me
+*	File Name     : MatcherTest.cpp
+*	Creation Time : 2014/10/13 21:19:40
+*	Environment   : Ubuntu 14.04-64bit
+*	Hompage       : http://www.lyq.me
+*/
+
 
 #include <iostream>
 #include <cstdio>

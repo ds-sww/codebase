@@ -2,7 +2,7 @@
 all : compile 
 
 compile :
-	g++ MatcherTest.cpp -o Main
+	g++ MatcherTest.cpp -o Main -g
 
 genData :
 	./Main genData
