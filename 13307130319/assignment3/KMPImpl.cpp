@@ -1,6 +1,6 @@
 /**
- * @author whimsycwd
- * @date 2014.10.1
+ * @author SiuTo
+ * @date 2014.10.13
  */
 
 
@@ -47,3 +47,4 @@ class KMPImpl : public Matcher {
 			delete [] p;
         }
 };
+
