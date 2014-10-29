@@ -120,7 +120,7 @@ string solve(string a){
 	int i,l,r,ans;
 	bool ne;
 	string tmp;
-	for(i=0;i<a.length();i++)
+	for(i=a.length()-1;i>0;i--)
 		if(a[i] == '^'){
 			l = find_left_digit(a,i-1);
 			r = find_right_digit(a,i+1);
@@ -177,6 +177,5 @@ int main(){
 		rep(pattern);
 		cout << pattern << endl;
 	}
-	return 0;
-
+return 0;
 }
