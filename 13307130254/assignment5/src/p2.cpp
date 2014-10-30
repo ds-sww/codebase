@@ -23,7 +23,8 @@ char text[3000];
 char operator_stack[3000];
 int num_stack[3000];
 
-int getNumber(int idx) // GET number from text
+// GET number from text
+int getNumber(int idx)
 {
     int d = text[idx] - 48;
     idx++;
@@ -32,34 +33,49 @@ int getNumber(int idx) // GET number from text
         d = d * 10 + text[idx] - 48;
         idx++;
     }
+	idx--;
     return d;
 }
-bool readyCalc(char opera1, char opera2) // checkout priority
+
+// checkout priority
+bool readyCalc(char opera1, char opera2)
 {
     switch (opera1)
     {
-        case ')': // pop the stack until meeting '('
-            if (opera2 == '(')
+		// pop the stack until meeting '('
+        case ')':
+	         if (opera2 == '(')
                 return false;
             return true;
-        case '+': // when '+-' will push into stack, '+-*/^' could be operate
-        case '-':
+		
+		// when '+-' will push into stack, '+-*/^' could be operate
+        case '+':
+		case '-':
             if (opera2 != '(')
                 return true;
             return false;
-        case '*': // prioer operator could be calculate
+		
+		// prioer operator could be calculate
+        case '*': 
         case '/':
             if (opera2 == '^' || opera2 == '*' || opera2 == '/')
                 return true;
             return false;
+		
+		// most prior
         case '^':
             return false;
-        case '(': // push in stack wait for ')'
+		
+		// push in stack wait for ')'
+        case '(': 
             return false;
     }
     return false;
 }
-int calcNumber(char opera, int a, int b) // get operator and two parameters to calculate answer and push it into num_stack
+
+// Get operator and two parameters 
+// To calculate answer and push it into num_stack
+int calcNumber(char opera, int a, int b) 
 {
     switch (opera)
     {
@@ -99,26 +115,32 @@ int main()
         {
             if (isdigit(text[i])) // whether it is a number
             {
-                num = getNumber(i);
+                num = getNumber(&i);
                 num_stack[++top_num] = num;
-                while (isdigit(text[i])) i++;
-                i--;
                 continue;
             }
 			
 			// not a number
             opera = text[i];
-            while (readyCalc(opera, operator_stack[top_operator])) // pop the stack and calculate mid answer.
+			
+			// pop the stack and calculate mid answer.
+            while (readyCalc(opera, operator_stack[top_operator])) 
             {
-                if (operator_stack[top_operator] != '(') // '(' not a operator
+				// '(' not a operator
+                if (operator_stack[top_operator] != '(') 
                 {
                     num = calcNumber(operator_stack[top_operator], num_stack[top_num-1], num_stack[top_num]);
                     top_num --; 
-                    num_stack[top_num] = num; // push mid answer back
-                }
-                top_operator--; // pop one operator
+					
+					// push mid answer back
+                    num_stack[top_num] = num;                 
+				}
+				// pop one operator
+                top_operator--; 
             }
-			// operator ')' is a signal to pop stack and ')' never push into stack
+
+			// operator ')' is a signal to pop stack 
+			// operator')' never push into stack
             if (opera != ')') operator_stack[++top_operator] = opera;
                 else top_operator--;
         }
