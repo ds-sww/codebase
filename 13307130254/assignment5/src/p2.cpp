@@ -44,7 +44,7 @@ bool readyCalc(char opera1, char opera2)
     {
 		// pop the stack until meeting '('
         case ')':
-	         if (opera2 == '(')
+		if (opera2 == '(')
                 return false;
             return true;
 		
@@ -62,7 +62,7 @@ bool readyCalc(char opera1, char opera2)
                 return true;
             return false;
 		
-		// most prior
+		// most priority
         case '^':
             return false;
 		
@@ -119,7 +119,7 @@ int main()
                 num_stack[++top_num] = num;
                 continue;
             }
-			
+	
 			// not a number
             opera = text[i];
 			
