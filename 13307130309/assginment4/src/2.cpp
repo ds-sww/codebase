@@ -13,38 +13,37 @@ int main()
 		for(i=0;i<n;i++)
 		{
 			scanf("%d",&num);
-			//é€€æ ˆ,ç»´æŠ¤å•è°ƒæ€§ 
+  			//ÍËÕ»,Î¬»¤µ¥µ÷ÐÔ 
 			while(p>0&&num<height[p-1])
 			{
 				if(max<(long long)height[p-1]*(i-st[p-1]))
 					max=(long long)height[p-1]*(i-st[p-1]);
 				p--;
 			}
+			//=========================== 
 			if(num>=height[p-1]||p==0)
 			{
-				//è®°å½•é«˜åº¦ 
+				//¼ÇÂ¼¸ß¶È 
 				height[p]=num;
-				//è®¡ç®—èµ·å§‹ä½ç½® 
+				//¼ÆËãÆðÊ¼Î»ÖÃ 
 				if(p==0)
 					st[p]=0;
 				else
 					st[p]=pos[p-1]+1;
-				//è®°å½•ä½ç½®ä¿¡æ¯ 
+				//¼ÇÂ¼Î»ÖÃÐÅÏ¢ 
 				pos[p]=i;
 				p++;
 			}
 		}
-		
-		//æœ€åŽé€€æ ˆ 
+		//×îºóÍËÕ» 
 		while(p>0)
 		{
 			if(max<(long long)height[p-1]*(n-st[p-1]))
 				max=(long long)height[p-1]*(n-st[p-1]);
 			p--;
 		}
-		printf("%lld\n",max);
-		
-		//===========================
+		printf("%I64d\n",max);
+		//=========================== 
 		scanf("%d",&n);
 	}
 	return 0;

@@ -17,8 +17,10 @@ BoyerMooreImpl::BoyerMooreImpl(string p)
         bc[p[i]] = i;
     }
     //suffix
-    for(int i = 0; i < p.length(); i++)
+    int pre = 0;
+    for(int i = p.length() - 1; i >= 0; i--)
     {
+        if(i > pre - suffix[pre] && suffix[p.length() - 1 - pre + i] <= i - pre - suffix[pre] )
         for(int j = 0; j <= i; j++)
         {
             if(p[i - j] == p[p.length() - 1 - j])

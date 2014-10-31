@@ -13,7 +13,7 @@ int num[N];
 int ans[N];
 int n,k,i;
 
-void Min(int &n, int &k) {
+void min(int &n, int &k) {
     while (!d.empty())
         d.pop_front();
     for (i = 0; i < k; i++) {
@@ -34,40 +34,22 @@ void Min(int &n, int &k) {
     }
 }
 
-void Max(int &n, int &k) {
-    while (!d.empty())
-        d.pop_front();
-    for (i = 0; i < k; i++) {
-        while (!d.empty() && d.back().value < num[i])
-            d.pop_back();
-        d.push_back(Node(num[i],i));
-    }
-    ans[0] = d.front().value;
-
-    for (i = k; i < n; i++) {
-        while (i - d.front().index >= k){
-            d.pop_front();
-        }
-        while (!d.empty() && d.back().value < num[i])
-            d.pop_back();
-        d.push_back(Node(num[i],i));
-        ans[i-k+1] = d.front().value;
-    }
-}
 
 int main() {
     cin >> n >> k;
     for (i = 0; i < n; i++)
         cin >> num[i];
 
-    Min(n,k);
+    min(n,k);
     for (i = 0; i <= n-k; i++)
         cout << ans[i] << ' ';
     cout << endl;
 
-    Max(n,k);
+    for (i = 0; i < n; i++)
+        num[i] = -num[i];
+    min(n,k);
     for (i = 0; i <= n-k; i++)
-        cout << ans[i] << ' ';
+        cout << -ans[i] << ' ';
 
     return 0;
 }

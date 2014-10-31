@@ -1,15 +1,13 @@
 #include<cstdio>
 #include<cstdlib>
-int n,k,num;
-int que_min[2000001],que_max[2000001],pos_min[2000001],pos_max[2000001];
-int st_min,en_min,st_max,en_max,min[2000001],max[2000001];
+int n,k,num,que_min[2000001],que_max[2000001],pos_min[2000001],pos_max[2000001],st_min,en_min,st_max,en_max,min[2000001],max[2000001];
 int main()
 {
 	int i,j;
 	scanf("%d %d",&n,&k);
 	st_max=en_max=0;
 	st_min=en_min=0;
-	//é¢„å…ˆè¿›é˜Ÿ 
+	//Ô¤ÏÈ½ø¶Ó 
 	for(i=0;i<k-1;i++)
 	{
 		scanf("%d",&num);
@@ -25,14 +23,14 @@ int main()
 	}
 	for(i=k-1;i<n;i++)
 	{
-		//é˜Ÿé¦–å‰è¿› 
+		//¶ÓÊ×Ç°½ø 
 		while(i-k>=pos_max[st_max])
 			st_max++;
 		while(i-k>=pos_min[st_min])
 			st_min++;
 		
 		scanf("%d",&num);
-		//é˜Ÿå°¾é€€å›žï¼Œè¿›é˜Ÿ 
+		//¶ÓÎ²ÍË»Ø£¬½ø¶Ó 
 		while(st_max<en_max&&num>=que_max[en_max-1])
 			en_max--;
 		pos_max[en_max]=i;
@@ -43,7 +41,7 @@ int main()
 		pos_min[en_min]=i;
 		que_min[en_min++]=num;
 		
-		//è®°å½•ä¹‹ 
+		//¼ÇÂ¼Ö® 
 		max[i]=que_max[st_max];
 		min[i]=que_min[st_min];
 	}
