@@ -1,6 +1,6 @@
 /**
- * @author whimsycwd
- * @date   2014.10.1
+ * @author Minjun-Li
+ * @date   2014.10.12
  */
 
 #include <iostream>
@@ -58,9 +58,9 @@ Matcher * getImpl(const string& pattern) {
 }
 
 void find(string text, string pattern, int expect) {
-    Matcher * impl = getImpl(pattern);
-    
+
     clock_t start_time = clock();
+    Matcher * impl = getImpl(pattern);
     int pos = impl->find(text);
     clock_t end_time = clock();
 
@@ -73,8 +73,8 @@ void find(string text, string pattern, int expect) {
     string out_pattern =(pattern.size() <= 100) ? pattern : "Too Long";
 
     
-    printf("start time : %lu\n", start_time);
-    printf("end   time : %lu\n", end_time);
+    //printf("start time : %lu\n", start_time);
+    //printf("end   time : %lu\n", end_time);
 
     printf("text          : %s\npattern       : %s\nmatch positon : %d\nexecution time: %lfs\n\n", 
             out_text.c_str(), out_pattern.c_str() , pos, ((double) end_time - start_time) / CLOCKS_PER_SEC);
@@ -158,8 +158,8 @@ void genData() {
     // long text
 
     
-    int text_len = 100;
-    int pattern_len = 99;
+    int text_len = 100000;
+    int pattern_len = 999;
     gen_text_pattern(text_len, pattern_len, text, pattern);
     text = text + pattern;
     fprintf(fp, "%s %s %d\n", pattern.c_str(), text.c_str(), text_len);
@@ -174,9 +174,9 @@ void genData() {
     text = text + pattern + text;
     fprintf(fp, "%s %s %d\n", pattern.c_str(), text.c_str(), text_len);
     
-    text_len = 100;
-    pattern_len = 99;
-    int repeat_time = 10;
+    text_len = 100000;
+    pattern_len = 999;
+    int repeat_time = 100;
     gen_text_pattern(text_len, pattern_len, text, pattern);
     text = repeat(text + pattern, repeat_time);
     fprintf(fp, "%s %s %d\n", pattern.c_str(), text.c_str(), text_len);
@@ -220,6 +220,66 @@ void genData() {
     text = repeat(text, repeat_time);
     text = text + pattern + text;
     pattern += "z";
+    fprintf(fp, "%s %s %d\n", pattern.c_str(), text.c_str(), Matcher::NOT_FOUND);
+
+    //a way to kill BF
+    text_len = 1000;
+    repeat_time = 200;
+    text.clear();
+    for(int i = 0; i < text_len; i++)
+    {
+        text.append(1, 'a');
+    }
+    pattern = text + "z";
+    text = repeat(text, repeat_time);
+    fprintf(fp, "%s %s %d\n", pattern.c_str(), text.c_str(), Matcher::NOT_FOUND);
+
+    //a way to kill BM
+    text_len = 20000000;
+    repeat_time = 2;
+    text.clear();
+    for(int i = 0; i < text_len; i++)
+    {
+        text.append(1, rand() % 10 + 'a');
+    }
+    pattern = text + "z";
+    text = repeat(text, repeat_time);
+    fprintf(fp, "%s %s %d\n", pattern.c_str(), text.c_str(), Matcher::NOT_FOUND);
+
+    //random data with 2 charactors
+    text_len = 1000;
+    repeat_time = 20000;
+    text.clear();
+    for(int i = 0; i < text_len; i++)
+    {
+        text.append(1, rand() % 2 + 'a');
+    }
+    pattern = text + "z";
+    text = repeat(text, repeat_time);
+    fprintf(fp, "%s %s %d\n", pattern.c_str(), text.c_str(), Matcher::NOT_FOUND);
+
+    //random data with 5 charactors
+    text_len = 1000;
+    repeat_time = 20000;
+    text.clear();
+    for(int i = 0; i < text_len; i++)
+    {
+        text.append(1, rand() % 5 + 'a');
+    }
+    pattern = text + "z";
+    text = repeat(text, repeat_time);
+    fprintf(fp, "%s %s %d\n", pattern.c_str(), text.c_str(), Matcher::NOT_FOUND);
+
+    //random data with 24 charactors
+    text_len = 1000;
+    repeat_time = 20000;
+    text.clear();
+    for(int i = 0; i < text_len; i++)
+    {
+        text.append(1, rand() % 24 + 'a');
+    }
+    pattern = text + "z";
+    text = repeat(text, repeat_time);
     fprintf(fp, "%s %s %d\n", pattern.c_str(), text.c_str(), Matcher::NOT_FOUND);
 
     fclose(fp);
