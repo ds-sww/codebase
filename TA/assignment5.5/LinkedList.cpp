@@ -85,6 +85,7 @@ class LinkedList {
         }
 
         ~LinkedList() {
+            while (cnt > 0) pop_front();
             delete head;
         }
 
