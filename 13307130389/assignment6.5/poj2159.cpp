@@ -6,34 +6,27 @@
 
 using namespace std ;
 
-int bucket[30] = {} ;
-int bucket_dst[30] = {} ;
+int bucket[27] = {} ;
+int bucket_dst[27] = {} ;
 
-char src[1003] = {} , dst[1003] = {} ;
+char src[100] = {} , dst[100] = {} ;
 
 int main()
 {
+	int i ;
 	scanf("%s\n%s",dst , src );
 	for( int i = 0 ; i < strlen(dst) ; i ++ )
 		bucket_dst[ dst[i] - 'A' ] ++ ;
 	sort( bucket_dst , bucket_dst + 26 ) ;
-	
-	int step ;
-	for( step = 0 ; step < 26 ; step ++ )
-	{
-		int i ;
-		memset( bucket , 0 , sizeof(bucket) );
+	for( int i = 0 ; i < strlen(dst) ; i ++ )
+		bucket[ src[i] - 'A' ] ++ ;
+	sort( bucket , bucket + 26 ) ;
 		
-		for(i = 0 ; i < strlen(src) ; i ++ )
-			bucket[ (src[i] - 'A' + step) % 26 ] ++ ;
-		sort( bucket , bucket + 26 ) ;
-		
-		for(i = 0 ; i < 26 ; i ++)
-			if( bucket[i] != bucket_dst[i] )
-				break ;
-		if( i == 26 ) { printf("YES\n"); break ; }
-	}
-	if( step == 26 ) printf("NO\n"); 
+	for(i = 0 ; i < 26 ; i ++)
+		if( bucket[i] != bucket_dst[i] )
+			break ;
+	if( i == 26 ) printf("YES\n"); 
+	else printf("NO\n"); 
 	
 	return 0;
 }
