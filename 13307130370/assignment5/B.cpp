@@ -1,6 +1,5 @@
-/*修改利用了了一下书上的栈定义以及中缀转后缀函数和后缀计算，
-将表达式转成后缀之后进行计算，但是过不了OJ，用一些正确的测试数据实验后也是正确的，
-不知道是哪里除了问题，希望助教予以改正，谢谢～*/
+//对一个地方作了修改，这样可以通过所有的数据了
+
 
 #include<iostream>
 #include<string>
@@ -189,6 +188,7 @@ int mid_to_pos(char mid_e[],char pos_e[])
 				{
 					pos_e[j++]=s.pop();
 				}
+				s.pop();
 				break;
 			default:return 1;
 			}
@@ -222,9 +222,3 @@ int main()
 	}
 	return 0;
 }
-
-
-
-
-
-

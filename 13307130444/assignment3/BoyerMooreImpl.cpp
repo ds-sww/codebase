@@ -1,5 +1,4 @@
  
-
 #include <string>
 #include <algorithm>
 #include <vector>
@@ -82,15 +81,13 @@ int BoyerMooreImpl::find(string text)
 	//查找
 	j=0;
 	while(j<n-m){///是否匹配到尽头
-		for(i=m-1;i>=0&&pattern[i]==text[i+j];--i);
+		for(i=m-1;i>=0&&pattern[i]==text[i+j];--i)
 			{if(i<0)
 				return j;
 			else
 				j+=Max(bmGs[i],bmBc[text[i+j]]-m+1+i);}
 	}
-}
-
-
+};
 
 
 
