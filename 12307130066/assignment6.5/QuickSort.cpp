@@ -1,6 +1,6 @@
 /**
- * @author whimsycwd
- * @date   2014.11.1
+ * @author Xuan Yuan
+ * @date   2014.11.5
  *
  */
 
@@ -18,30 +18,26 @@ class QuickSort : public Sortable {
    
     private :
         void quick_sort(vector<int> & data, int l, int r) {
-            if (l + 1 >= r) 
-                return;
-
-            int i = l;            
-            int j = r;
-            int pole = data[(l + r) / 2];
-            while (i < j) {
-                while (i<r && data[i] < pole) ++i;
-                while (j>l && data[j-1] > pole) --j; 
-                
-                if (i<j) {
-                    swap(data[i], data[j-1]);
-                    ++i;
-                    --j;
-                }
+            if(l >= r)
+            	return;
+            int i = l, j = r;
+            int ctrl = data[l];
+            while(i < j) {
+            	while(data[j] >= ctrl && i != j)
+            		j--;
+            	data[i] = data[j];
+            	
+            	while(data[i] < ctrl && i != j)
+            		i++;
+            	data[j] = data[i];
             }
-
-            quick_sort(data, i, r);
-            quick_sort(data, l, j);
-
+            data[i] = ctrl;
+            quick_sort(data, l, i-1);
+            quick_sort(data, i+1, r);
         }
 
     public :
         virtual void sort(vector<int>& data) {
-            quick_sort(data, 0, data.size());
+            quick_sort(data, 0, data.size()-1);
         }
 };

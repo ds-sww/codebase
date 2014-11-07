@@ -1,6 +1,6 @@
 /**
- * @author whimsycwd
- * @date   2014.11.1
+ * @author XuanYuan
+ * @date   2014.11.5
  *
  */
 
@@ -18,41 +18,24 @@ class MergeSort : public Sortable {
         vector<int> aux;
     
         void mergeSort(vector<int> & data, int l, int r) {
-            
-            // printf("%d %d\n", l, r);
-
-            if (l + 1 ==  r) return;
-            
-            int mid = (l+r) / 2;
-
-            mergeSort(data, l, mid);
-            mergeSort(data, mid, r);
-
-            // left part and right part is sorted, merge them.
-            
-            int lp = l;
-            int rp = mid;
-            
-            for (int i = l; i < r; ++i) {
-                if (lp == mid) {
-                    aux[i] = data[rp++];
-                } else {
-                    if (rp == r) {
-                        aux[i] = data[lp++];
-                    } else {
-                        if (data[lp] < data[rp]) {
-                            aux[i] = data[lp++];
-                        } else {
-                            aux[i] = data[rp++];
-                        }
-                    }
-                }
-            }
-
-            for (int i = l; i< r; ++i) {
-                data[i] = aux[i];
-            }
-
+        	if(l >= r - 1)
+        		return;
+        	int m = ( l + r + 1 ) / 2;
+        	mergeSort(data, l, m);
+        	mergeSort(data, m, r);
+        	int i = l, j = m, k = 0;
+        	while(i < m && j < r) {
+        		if(data[i] < data[j])
+        			aux[k++] = data[i++];
+        		else
+        			aux[k++] = data[j++];
+        	}
+        	while(i < m)
+        		aux[k++] = data[i++];
+        	while(j < r)
+        		aux[k++] = data[j++];
+        	for(int t = 0; t < k; t++)
+        		data[l+t] = aux[t];
         }
 
     public :
