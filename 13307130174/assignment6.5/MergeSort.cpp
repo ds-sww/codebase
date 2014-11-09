@@ -1,6 +1,6 @@
 /**
- * @author whimsycwd
- * @date   2014.11.1
+ * @author irmo
+ * @date   2014.11.9
  *
  */
 
@@ -16,10 +16,6 @@ class MergeSort : public Sortable {
 
     private:
         vector<int> aux;
-       // void Merge(vector<int> &data, int l, int m, int r) {
-
-         //   return;
-        //}
         void mergeSort(vector<int> & data, int l, int r) {
             
             
@@ -27,8 +23,6 @@ class MergeSort : public Sortable {
             int mid = (l + r) / 2;
             mergeSort(data, l, mid);
             mergeSort(data, mid + 1, r);
-            //Merge(data, l, mid, r);
-            
             for (int i = l; i <= mid; ++i) aux[i] = data[i];
             for (int i = mid + 1; i <= r; ++i) aux [r + mid + 1 - i] = data[i];
             int i = l;
