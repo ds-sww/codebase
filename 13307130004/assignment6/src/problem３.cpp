@@ -27,8 +27,7 @@ int main(){
   int a[N],b[N];
   int sum,j;
   bool z=false;
-  while(1){
-  	scanf("%d%d",&m,&n);
+  while(scanf("%d%d",&m,&n)!=EOF){
     if((!m)and(!n)) break;
   	for(int i=0;i<m;i++)
   		cin>>a[i];
