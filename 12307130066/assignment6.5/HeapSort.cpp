@@ -1,6 +1,6 @@
 /**
- * @author whimsycwd
- * @date   2014.11.1
+ * @author Xuan Yuan
+ * @date   2014.11.5
  */
 
 #include<iostream>
@@ -8,6 +8,7 @@
 #include<vector>
 #include<cassert>
 #include<algorithm>
+#include<cmath>
 #include "Sortable.h"
 
 
@@ -18,50 +19,53 @@ class HeapSort : public Sortable {
     private :
         int * heap;
         int heapSize;
-        const static int ROOT = 0;
-
-
-        void restoreUp(int idx) {
-            while (idx != ROOT && heap[(idx - 1) / 2] > heap[idx]) {
-                swap(heap[(idx - 1) / 2], heap[idx]);
-                idx = (idx - 1) / 2;
-            }
-        }
-        void restoreDown(int idx) {
-            while (idx < heapSize) {
-
-                int minIndex = idx;
-                if (idx * 2 + 1 < heapSize && 
-                        heap[idx * 2 + 1] < heap[minIndex])  {
-                    minIndex = idx * 2 + 1;
-                } 
-                if (idx * 2 + 2 < heapSize && 
-                        heap[idx * 2 + 2] < heap[minIndex]) {
-                    minIndex = idx * 2 + 2;
-                }
-
-                if (idx == minIndex) break;
-                else {
-                    swap(heap[idx], heap[minIndex]);
-                    idx = minIndex;
-                }
-            
-            }
-        }
-
+		
+		//Up用于将最后一个元素向上放到恰当的位置
+		void Up() {
+			int tmp;
+			int i = heapSize - 1;
+			while(i > 0) {
+				if(heap[i] < heap[(i-1)/2)] {
+					tmp = heap[i];
+					heap[i] = heap[(i-1)/2];
+					heap[(i-1)/2] = tmp;
+				} else {
+					break;
+				}
+				i = ( i - 1 ) / 2;
+			}
+		}
+		
+		//Down用于将第一个元素向下放到恰当的位置
+		void Down() {
+			int tmp;
+			int i = 0;
+			for(int t = 0; t < (int)log2(heapSize); t++) {
+				if(heap[i] > heap[2*i+2] && heap[2*i+1] > heap[2*i+2]) {
+					tmp = heap[i];
+					heap[i] = heap[2*i+2];
+					heap[2*i+2] = tmp;
+					i = 2 * i + 2;
+				}
+				else if(heap[i] > heap[2*i+1] && heap[2*i+1] < heap[2*i+2]) {
+					tmp = heap[i];
+					heap[i] = heap[2*i+1];
+					heap[2*i+1] = tmp;
+					i = 2 * i + 1;
+				}
+			}
+		}
+		
         void push(int x) {
-            heap[heapSize] = x;
-            restoreUp(heapSize);
-            heapSize++; 
+        	heap[heapSize++] = x;
+        	Up();
         }
+        
         int pop() {
-            assert(heapSize > 0);
-            int retValue = heap[ROOT];
-            
-            swap(heap[ROOT], heap[--heapSize]);
-
-            restoreDown(ROOT);  
-            return retValue;   
+        	int result = heap[0];
+        	heap[0] = heap[--heapSize];
+        	Down();
+        	return result;
         }
  
     public :
