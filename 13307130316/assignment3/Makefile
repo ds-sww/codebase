@@ -4,7 +4,7 @@ all : compile
 compile :
 	g++ MatcherTest.cpp -o Main
 
-genData :
+genData : compile
 	./Main genData
 
 allImpl : BF KR KMP BM
