@@ -16,4 +16,3 @@ feel free to modify MatherTest.cpp & Matcher.h & Makefile
 4.  **修改MatcherTest, 完善该测试**!
 5.  3-4重复完成4个实现
 6.  TA做了简单 MatcherTest 测时间功能。 请结合课本比较四个算法的运行效率。 
-7.  设计更合理的数据，完善profile的代码，对4个算法进行比较。

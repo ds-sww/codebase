@@ -27,9 +27,7 @@ class KMPImpl : public Matcher {
 			pre[0] = -1;
 			for(int i = 1, j = -1; i < lenPattern; i++)
 			{
-				for(; j != -1 && pattern[i] != pattern[j + 1]; j = pre[j])
-				{
-				}
+				for(; j != -1 && pattern[i] != pattern[j + 1]; j = pre[j]);
 
 				if(pattern[i] == pattern[j + 1])
 				{
@@ -45,9 +43,7 @@ class KMPImpl : public Matcher {
 			int i, j;
 			for(i = 0, j = -1; i < lenText; i++)
 			{
-				for(; j != -1 && text[i] != pattern[j + 1]; j = pre[j])
-				{
-				}
+				for(; j != -1 && text[i] != pattern[j + 1]; j = pre[j]);
 
 				if(text[i] == pattern[j + 1])
 				{
@@ -66,5 +62,6 @@ class KMPImpl : public Matcher {
         }
 
         virtual ~KMPImpl() {
+			delete[] pre;
         }
 };
