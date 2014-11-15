@@ -1,44 +1,41 @@
 #include<cstdio>
 #include<cstring>
-#include<cstdlib>
-#include<algorithm>
 #include<iostream>
+#include<cstdlib>
+#include<cmath>
 
-using namespace std ;
-
-int n , k ;
-int a[100005] = {} ;
+using namespace std; 
 
 void qsort( int *a , int top , int bot )
 {
-        int left = top , right = bot , temp = a[top] ;
+        int left = top ,right = bot , temp = a[top] ;
         while( left < right )
         {
-                while( left < right && a[right] > temp ) right -- ;
-                a[left] = a[right] ;
-                while( left < right && a[left] <= temp ) left ++ ;
-                a[right]= a[left] ;
+                while( left < right && abs(a[right]) > abs(temp) ) right -- ;
+                a[left] = a[right ];
+                while( left < right && abs(a[left]) <= abs(temp) ) left ++ ;
+                a[right] = a[left] ;
         }
         a[right] = temp ;
         if( top < right - 1 ) qsort( a , top , right - 1 ) ;
         if( right + 1 < bot ) qsort( a , right + 1 , bot ) ;
 }
 
+int a[50002] = {} ;
+
 int main()
 {
-        char c[10] = {} ;
-        cin >> n ;
-        for( int i = 1 ; i <= n ; i ++)
+        int ans = 0 ;
+        int T , N ;
+        cin >> T >> N ;
+        a[0] = 0 ;
+        for( int i = 1 ; i <= N ; i ++)
                 scanf("%d",&a[i]) ;
-        scanf("%s\n",c) ;
-        qsort( a , 1 , n ) ;
-        cin >> k ;
         
-        for( int i = 1 ; i <= k ; i ++)
-        {
-                int tt ;
-                cin >> tt ;
-                printf("%d\n",a[tt] ) ;
-        }
-        return 0 ;
+        qsort( a , 0 , N );
+        
+        while( T >= 0 ) { ans ++ ; T -= abs( a[ans] - a[ans-1] ) ; }
+        ans -- ;
+        cout << ans ;
+        return 0;
 }
