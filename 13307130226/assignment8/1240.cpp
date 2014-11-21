@@ -3,7 +3,7 @@
 #include<vector>
 using namespace std;
 
-string pre,pas;
+string pre,post;
 class tree{
 public:
 	char name;
@@ -35,9 +35,9 @@ void make_pre(tree* now){
 	for(int i=0;i<now->sons.size();i++)
 		make_pre(now->sons[i]);
 }
-void make_pas(tree* now){
+void make_post(tree* now){
 	for(int i=0;i<now->sons.size();i++)
-		make_pas(now->sons[i]);
+		make_post(now->sons[i]);
 	cout << now->name;
 }
 long long ccc(int a,int s){
@@ -63,13 +63,13 @@ int main(){
 	cin >> n;
 	if(n==0)
 		return 0;
-	cin >> pre >> pas;
+	cin >> pre >> post;
 	delete(root);
 	root = new tree;
 	root->name = pre[0];
 	now = root;
 	for(j=0,i=1;i<pre.size();i++){
-		while(j<pas.size()&&pas[j]==now->name){
+		while(j<post.size()&&post[j]==now->name){
 			now=now->father;
 			++j;
 		}
@@ -81,8 +81,8 @@ int main(){
 	/*
 	cout << "PRE:" << endl;
 	make_pre(root);
-	cout << endl << "PAS:" << endl;
-	make_pas(root);
+	cout << endl << "post:" << endl;
+	make_post(root);
 	cout << endl;  */
 	m=1;
 	count(root);
