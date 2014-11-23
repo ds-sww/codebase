@@ -8,7 +8,7 @@
 using namespace std;
 
 class BruteForceImpl : public Matcher {
-    
+
     private :
         string pattern;
 
@@ -28,10 +28,22 @@ class BruteForceImpl : public Matcher {
 				}
             return NOT_FOUND;
         }
-        
+
         virtual ~BruteForceImpl() {
         }
 };
+/*int main()
+{
+    freopen("test","r",stdin);
+    string a,b;
+    //a="abdadfadfaabcdadfadfa ";
+    //b="abc";
+    while(cin>>b>>a)
+    {
+        BruteForceImpl* Ka=new BruteForceImpl(b);
+        cout<<Ka->find(a)<<endl;
+    }
 
+}*/
 
 
