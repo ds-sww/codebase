@@ -1,0 +1,10 @@
+./gen
+./poj2761
+./std
+while diff 1.out 2.out 
+do
+echo "sb"
+./gen
+./poj2761
+./std
+done
