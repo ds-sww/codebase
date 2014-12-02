@@ -1,8 +1,9 @@
 /**
- * @author whimsycwd
- * @date   2014.10.8
+ * @author ChenYuxin
+ * @date   2014.10.15
  *
  * help to understand KMP
+ * Automata with only one pattern. 
  */
 
 #include<string>
@@ -16,56 +17,59 @@ using namespace std;
 
 class AutomataImpl : public Matcher {
     private : 
-        string pattern;
-        const static int CHAR_NUMBER = 26;
-       int  (*state)[CHAR_NUMBER];
+		const static int CHAR_NUMBER = 26;
+		const static int NOT_FOUND = -1;
+		string pattern;
+		int lenPattern;
+		int (*child)[CHAR_NUMBER]; ///////// unskilled
 
-        // self match
-        void preprocess() {
-            for (int i = 0; i < pattern.size(); ++i) {
-                state[i][pattern[i] - 'a'] = i + 1;
-            }
-            int cur = 0;
-            for (int i = 1; i< pattern.size(); ++i) {
-                for (char ch = 'a'; ch<='z'; ++ch) { 
-                    if (ch != pattern[i]) {
-                        state[i][ch - 'a'] = state[cur][ch - 'a'];
-                    }
-                }
-                cur = state[cur][pattern[i] - 'a'];
-            }
+		void preprocess()
+		{
+			for(int i = 0; i < lenPattern; i++)
+			{
+				child[i][pattern[i] - 'a'] = i + 1;
+			}
 
-            
-        }
-    public :
-        AutomataImpl(string pattern) {
+			for(int i = 1, cur = 0; i < lenPattern; i++)
+			{
+				for(int j = 0; j < CHAR_NUMBER; j++)
+				{
+					if(!child[i][j]) child[i][j] = child[cur][j];
+				}
+				cur = child[cur][pattern[i - 1] - 'a'];
+			}
+		}
+
+	public :
+        AutomataImpl(string pattern) 
+        {
             this->pattern = pattern;
-            state = new int[pattern.size()][CHAR_NUMBER];
+            lenPattern = pattern.length();
+
+			child = new int[lenPattern + 1][CHAR_NUMBER];
             
-            // !!! WTF?  must initialize 0. or Segment Fault.. Dirty Data.
-            memset(state, 0, pattern.size() * CHAR_NUMBER * sizeof(int));
+            memset(child, 0, lenPattern * CHAR_NUMBER * sizeof(int));
 
             preprocess();
         }
 
-        virtual int find(string text) {
-            if (text.size() < pattern.size()) {
-                return NOT_FOUND;
-            }
-            int cur = 0;
-            for (int i = 0; i < text.size(); ++i) {
-                cur = state[cur][text[i] - 'a'];
-            //    cout << cur << endl;
-                if (cur == pattern.size()) {
-                    return i - pattern.size() + 1;
-                }
-            } 
-            
-            return NOT_FOUND; 
+        virtual int find(string text) 
+        {
+        	int lenText = text.length();
+
+        	for(int i = 0, cur = 0; i < lenText; i++)
+			{
+				cur = child[cur][text[i] - 'a'];
+
+				if(cur == lenPattern) return i - lenPattern + 1;
+			}
+
+			return NOT_FOUND;
         }
 
-        virtual ~AutomataImpl() {
-            delete [] state;
+        virtual ~AutomataImpl() 
+        {
+            delete[] child; //////// unskilled
         }
 };
 

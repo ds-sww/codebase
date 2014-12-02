@@ -27,6 +27,3 @@ int BruteForceImpl::find (const string text)
 }
 
 
-
-
-

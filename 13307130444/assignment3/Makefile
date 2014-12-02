@@ -1,6 +1,7 @@
 
 all : compile 
 
+CFLAGS=-g
 compile :
 	g++ MatcherTest.cpp -o Main
 
