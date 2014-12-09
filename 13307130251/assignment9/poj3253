@@ -1,0 +1,36 @@
+//优先队列
+#include <iostream>
+#include <string>
+#include <queue>
+#include<stdio.h>
+using namespace std;
+priority_queue<int,vector<int>,greater<int> >Q;
+int main()
+{
+   // freopen("out","r",stdin);
+    int n,temp;
+    long long sum;
+    cin>>n;
+    for(int i=0;i<n;i++)
+    {
+        cin>>temp;
+        Q.push(temp);
+    }
+    if(n==1)sum=Q.top();
+    else
+    {
+    int a,b;
+    sum=0;
+    while(Q.size()>1)
+    {
+    a=Q.top();
+    Q.pop();
+    b=Q.top();
+    Q.pop();
+    sum=sum+a+b;
+    Q.push(a+b);
+    }
+    }
+    cout<<sum<<endl;
+
+}

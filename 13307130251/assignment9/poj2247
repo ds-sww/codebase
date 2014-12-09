@@ -1,0 +1,39 @@
+#include <iostream>
+#include<algorithm>
+#include<stdio.h>
+using namespace std;
+int a[5843];
+int main()
+{
+    //freopen("in","r",stdin);
+    int p2,p3,p5,p7,np2,np3,np5,np7;
+    p2=p3=p5=p7=1;
+    a[1]=1;
+    np2=a[p2]*2;
+    np3=a[p3]*3;
+    np5=a[p5]*5;
+    np7=a[p7]*7;
+    for(int i=2;i<=5842;i++)
+    {
+        a[i]=min(np2,min(np3,min(np5,np7)));
+        if(a[i]==np2)np2=a[++p2]*2;
+        if(a[i]==np3)np3=a[++p3]*3;
+        if(a[i]==np5)np5=a[++p5]*5;
+        if(a[i]==np7)np7=a[++p7]*7;
+    }
+    int n;
+    scanf("%d", &n);
+    while(n)
+    {
+        int n100 = n % 100, n10 = n %10;
+        if((n100)==11)printf("The %dth humble number is %d.\n",n,a[n]);
+        else if((n100)==12)printf("The %dth humble number is %d.\n",n,a[n]);
+        else if((n100)==13)printf("The %dth humble number is %d.\n",n,a[n]);
+        else if((n10)==1)printf("The %dst humble number is %d.\n",n,a[n]);
+        else if((n10)==2)printf("The %dnd humble number is %d.\n",n,a[n]);
+        else if((n10)==3)printf("The %drd humble number is %d.\n",n,a[n]);
+        else printf("The %dth humble number is %d.\n",n,a[n]);
+        scanf("%d", &n);
+    }
+    return 0;
+}

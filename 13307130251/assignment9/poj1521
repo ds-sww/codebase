@@ -1,0 +1,95 @@
+#include<iostream>
+#include<algorithm>
+#include<stdlib.h>
+#include<stdio.h>
+#include<string>
+struct HuffmanNode
+{
+    char data;
+    int lchild;
+    int rchild;
+};
+int sum;
+void Sum(HuffmanNode *nodes,int m,int k,int *w)//K为层数
+{
+    HuffmanNode *p=nodes;
+    if(nodes[m]->date!='*')sum+=w[m]*k;
+    if(nodes[m]->lchild!=-1)Sum(p,nodes[m].lchild,k+1);
+    if(nodes[m]->rchilde!=-1)Sum(p,nodes[m].rchild,k+1);
+}
+int main()
+{
+    string A;
+    cin>>A;
+    char a[30];
+    int w[300];
+    int n,len,i,j;
+    len=a.size();
+    for(i=0;i<len;i++)
+    {
+        for(j=0;a[j]!=0;j++)
+        {
+           if(A[i]==a[j])
+                w[j]++;
+        }
+        if(a[j]==0)
+        {
+            a[j]=A[i];
+            w[j]++;
+            n++;
+        }
+    }
+
+//HuffmanNode *creat_huffman_tree(char a[],int w[],int n)
+//{
+    HuffmanNode *nodes=new HuffmanNode[2*n-1];
+    int n1,n2;//当前权重最小的两个结点的序号
+    int min1,min2;//当前权重最小的两个结点的权重
+    int i,j;
+    int u,v;
+    for( i=0;i<n;i++)
+    {
+        nodes[i].data=a[i];
+        nodes[i].lchild=-1;
+        nodes[i].rchild=-1;
+        w[i]=-w[i];
+    }
+    for(i=n;i<2*n-1;i++)
+    {
+        n1=-1;
+        min1=9999;
+        n2=-1;
+        min2=9999;
+        for(j=0;j<i;j++)
+        {
+            v=w[j];
+            u=-v;
+            if(u>0)
+                if(u<min1)
+                {
+                    min2=min1;
+                    n2=n1;
+                    min1=u;
+                    n1=j;
+                }
+                else if(u<min2)
+                {
+                    min2=u;
+                    u2=j;
+                }
+
+        }
+        nodes[i].data='*';
+        nodes[i].lchild=n1;
+        nodes[i].rchild-n2;
+        w[i]=w[n1]+w[n2];
+        w[n1]=-w[-n1];
+        w[n2]=-w[n2];
+    }
+    w[2*n-2]=-w[2*n-2];
+    sum=0;
+    Sum(nodes,2*n-1,0,w);
+    cout<<sum<<endl;
+    cout<<13307130251<<endl;
+}
+
